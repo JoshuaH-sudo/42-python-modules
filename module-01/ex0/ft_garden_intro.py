@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 
 def ft_garden_intro():
+    """
+    This function introduces a simple garden with one plant.
+    It prints the plant's name, height, and age.
+    """
     plant_name = "Rose"
-    plant_height = 25  # in centimeters
-    plant_age = 30      # in days
+    plant_height = 25
+    plant_age = 30
 
     print("=== Welcome to My Garden ===")
     print(f"Plant: {plant_name.capitalize()}")
