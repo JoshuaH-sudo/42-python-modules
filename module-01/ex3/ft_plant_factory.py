@@ -40,27 +40,21 @@ class Plant:
         self.age_days += days
 
 
-def ft_plant_growth():
-    """
-    This function simulates the growth of a plant over a period of days.
-    """
-    rose = Plant("rose", 25, 30)
-    start_size = rose.height_cm
+def ft_plant_factory():
+    names = ["rose", "oak", "cactus", "sunflower", "fern"]
+    heights = [25, 200, 5, 80, 15]
+    ages = [30, 365, 90, 45, 120]
 
-    print("=== Day 1 ===")
-    rose.get_info()
-
-    for _ in range(6):
-        rose.grow(1)
-        rose.age(1)
-
-    print("=== Day 7 ===")
-    rose.get_info()
-
-    end_size = rose.height_cm
-    difference = end_size - start_size
-    print(f"Growth this week: +{difference}cm")
+    print("=== Plant Factory Output ===")
+    for i in range(len(names)):
+        plant = Plant(names[i], heights[i], ages[i])
+        print(
+            f"Created: {plant.name.capitalize()} "
+            f"({plant.height_cm}cm, {plant.age_days} days)"
+        )
+    print("\n")
+    print(f"Total plants created: {len(names)}")
 
 
 if __name__ == "__main__":
-    ft_plant_growth()
+    ft_plant_factory()

@@ -5,7 +5,7 @@ def ft_garden_intro():
     This function introduces a simple garden with one plant.
     It prints the plant's name, height, and age.
     """
-    plant_name = "Rose"
+    plant_name = "rose"
     plant_height = 25
     plant_age = 30
 

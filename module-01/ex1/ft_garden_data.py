@@ -28,9 +28,9 @@ def ft_garden_data():
     """
     This function creates a list of plants and displays their information.
     """
-    rose = Plant("Rose", 25, 30)
-    sunflower = Plant("Sunflower", 80, 45)
-    cactus = Plant("Cactus", 15, 120)
+    rose = Plant("rose", 25, 30)
+    sunflower = Plant("sunflower", 80, 45)
+    cactus = Plant("cactus", 15, 120)
     plants = [rose, sunflower, cactus]
     print("=== Garden Plant Registry ===")
     for plant in plants:
