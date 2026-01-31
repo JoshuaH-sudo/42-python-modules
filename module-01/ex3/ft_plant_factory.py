@@ -41,6 +41,9 @@ class Plant:
 
 
 def ft_plant_factory():
+    """
+    Function to create multiple Plant instances and display their information.
+    """
     names = ["rose", "oak", "cactus", "sunflower", "fern"]
     heights = [25, 200, 5, 80, 15]
     ages = [30, 365, 90, 45, 120]
