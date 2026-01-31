@@ -10,7 +10,7 @@
   "editor.formatOnSave": true,
   "editor.insertSpaces": false,
   "editor.tabSize": 4,
-  "editor.detectIndentation": true,
+  "editor.detectIndentation": false,
   "[python]": {
     "editor.insertSpaces": false,
     "editor.tabSize": 4
