@@ -7,10 +7,19 @@ class Plant:
         age_days (int): The age of the plant in days.
     """
 
-    def __init__(self, name: str, height_cm: int, age_days: int):
+    def __init__(
+        self,
+        name: str,
+        height_cm: int,
+        age_days: int,
+        score: int = 10,
+        plant_type: str = "regular",
+    ):
         self.name = name
         self.height_cm = height_cm
         self.age_days = age_days
+        self.score = score
+        self.type = plant_type
 
     def get_info(self):
         """
@@ -35,8 +44,16 @@ class Flowering(Plant):
     A class to represent a flower, inheriting from Plant.
     """
 
-    def __init__(self, name: str, height_cm: int, age_days: int, color: str):
-        super().__init__(name, height_cm, age_days)
+    def __init__(
+        self,
+        name: str,
+        height_cm: int,
+        age_days: int,
+        color: str,
+        points: int = 50,
+        plant_type: str = "flowering",
+    ):
+        super().__init__(name, height_cm, age_days, points, plant_type)
         self.color = color
 
     def get_info(self):
@@ -63,7 +80,9 @@ class prizeFlower(Flowering):
     def __init__(
         self, name: str, height_cm: int, age_days: int, color: str, points: int
     ):
-        super().__init__(name, height_cm, age_days, color)
+        super().__init__(
+            name, height_cm, age_days, color, points, "prize flowers"
+        )
         self.points = points
 
     def get_info(self):
@@ -85,6 +104,10 @@ class Garden:
     owner: str
     plants: list[Plant] = []
     total_growth: int = 0
+    total_points: int = 0
+    regular_plants: int = 0
+    flowering_plants: int = 0
+    prize_flowers: int = 0
 
     def __init__(self, owner: str):
         self.owner = owner
@@ -97,6 +120,13 @@ class Garden:
             plant (Plant): The plant to add.
         """
         self.plants.append(plant)
+        self.total_points += plant.score
+        if plant.type == "prize flowers":
+            self.prize_flowers += 1
+        elif plant.type == "flowering":
+            self.flowering_plants += 1
+        else:
+            self.regular_plants += 1
         print(
             f"Added {plant.name.capitalize()} to",
             f"{self.owner.capitalize()}'s garden.",
@@ -126,6 +156,7 @@ class Garden:
         for plant in self.plants:
             plant.grow(cm)
             self.total_growth += cm
+        print("")
 
 
 class GardenManager:
@@ -173,7 +204,7 @@ class GardenManager:
             garden.add_plant(plant)
             stats.record_plant(plant)
 
-    def report(self, owner: str):
+    def garden_report(self, owner: str):
         """
         Reports the statistics of a specific garden.
         Args:
@@ -181,20 +212,59 @@ class GardenManager:
         """
         garden = self.get_garden(owner)
         if garden:
-            self.GardenStats.print_stats(garden)
+            self.GardenStats.print_garden_stats(garden)
+
+    def manager_report(self):
+        """
+        Reports the overall statistics of all managed gardens.
+        """
+        self.GardenStats.print_manager_stats(self.gardens)
 
     class GardenStats:
         @staticmethod
-        def print_stats(garden: Garden):
+        def print_garden_stats(garden: Garden):
             print(f"=== {garden.owner.capitalize()}'s Garden Report ===")
             print("Plants in garden:")
             for plant in garden.plants:
                 print(f"- {plant.get_info()}")
-            print("\n")
+            print("")
             print(
                 f"Plants added: {garden.get_plant_count()}",
                 f"total growth: {garden.total_growth}cm",
             )
+            print(
+                f"Plant types: {garden.regular_plants} regular,",
+                f"{garden.flowering_plants} flowering,",
+                f"{garden.prize_flowers} prize flowers",
+            )
+            print("")
+
+        @staticmethod
+        def print_manager_stats(gardens: dict):
+            garden_count = 0
+            height_validated = True
+            for owner in gardens:
+                garden = gardens[owner]
+                for plant in garden.plants:
+                    if plant.height_cm < 0:
+                        height_validated = False
+                garden_count += 1
+            print(f"Height validation test: {height_validated}")
+            print("Garden scores: - ", end="")
+            index = 0
+            for owner in gardens:
+                garden = gardens[owner]
+                print(
+                    f"{garden.owner.capitalize()}:",
+                    f"{garden.total_points} points",
+                    end="",
+                )
+                if index < garden_count - 1:
+                    print(", ", end="")
+                else:
+                    print("")
+                index += 1
+            print(f"Total gardens managed: {garden_count}")
 
 
 def ft_garden_analytics():
@@ -209,10 +279,10 @@ def ft_garden_analytics():
     print("\n")
 
     aliceGarden.grow_all(1)
-    print("\n")
 
-    gardenManager.report("Alice")
-    print("\n")
+    gardenManager.garden_report("Alice")
+
+    gardenManager.manager_report()
 
 
 if __name__ == "__main__":
