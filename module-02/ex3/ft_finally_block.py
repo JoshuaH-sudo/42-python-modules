@@ -1,4 +1,7 @@
 def water_plants(plant_list: list[str]):
+    """
+    Simulates watering plants, demonstrating the use of a finally block for cleanup.
+    """
     print("Opening watering system")
     try:
         for plant in plant_list:
@@ -14,6 +17,9 @@ def water_plants(plant_list: list[str]):
 
 
 def test_watering_system():
+    """
+    Tests the watering system with both normal and error scenarios.
+    """
     print("Testing normal watering...")
     plants = ["tomato", "lettuce", "carrots"]
     water_plants(plants)
