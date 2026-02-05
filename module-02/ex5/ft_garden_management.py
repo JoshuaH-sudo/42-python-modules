@@ -7,6 +7,11 @@ class GardenError(Exception):
 
 
 class GardenManager:
+    """
+    Manages a garden.
+    Demonstrates error handling and recovery in a garden management context.
+    """
+
     def __init__(self):
         self.plants = []
 
@@ -72,7 +77,7 @@ def test_garden_management():
         manager.add_plant("tomato")
         manager.add_plant("lettuce")
         manager.add_plant(None)  # should trigger error
-    except GardenError as e:
+    except ValueError as e:
         print(f"Error adding plant: {e}")
 
     print("\nWatering plants...")
