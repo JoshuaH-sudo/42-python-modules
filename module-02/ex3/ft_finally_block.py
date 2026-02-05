@@ -1,6 +1,7 @@
 def water_plants(plant_list: list[str]):
     """
-    Simulates watering plants, demonstrating the use of a finally block for cleanup.
+    Simulates watering plants,
+    demonstrating the use of a finally block for cleanup.
     """
     print("Opening watering system")
     try:
