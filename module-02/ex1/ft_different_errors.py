@@ -1,4 +1,4 @@
-def garden_operations():
+def garden_operations() -> None:
     try:
         print("Testing ValueError...")
         int("abc")
@@ -26,7 +26,7 @@ def garden_operations():
         missing = {"a": 1, "b": 2}
         print(missing["_plant"])
     except KeyError:
-        print("Caught KeyError: 'missing\_plant'")
+        print("Caught KeyError: 'missing_plant'")
     print()
 
     # Testing multiple exceptions in one block
@@ -40,7 +40,7 @@ def garden_operations():
     print()
 
 
-def test_error_types():
+def test_error_types() -> None:
     print("=== Garden Error Types Demo ===\n")
     garden_operations()
     print("All error types tested successfully!")

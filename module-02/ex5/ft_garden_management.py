@@ -1,7 +1,7 @@
 class GardenError(Exception):
     """Custom exception for garden management errors."""
 
-    def __init__(self, message):
+    def __init__(self, message: str):
         super().__init__(message)
         self.message = message
 
@@ -12,10 +12,10 @@ class GardenManager:
     Demonstrates error handling and recovery in a garden management context.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.plants = []
 
-    def add_plant(self, plant_name):
+    def add_plant(self, plant_name: str) -> None:
         try:
             if plant_name is None or plant_name.strip() == "":
                 raise ValueError("Plant name cannot be empty!")
@@ -24,7 +24,7 @@ class GardenManager:
         except ValueError as e:
             print(f"Error adding plant: {e}")
 
-    def water_plants(self):
+    def water_plants(self) -> None:
         try:
             print("Opening watering system")
             for plant in self.plants:
@@ -34,7 +34,9 @@ class GardenManager:
         finally:
             print("Closing watering system (cleanup)")
 
-    def check_plant_health(self, plant_name, water_level, sunlight_hours):
+    def check_plant_health(
+        self, plant_name: str, water_level: int, sunlight_hours: int
+    ) -> None:
         try:
             # check plant name is not empty
             if not plant_name:
@@ -68,7 +70,7 @@ class GardenManager:
             print(f"Error checking {plant_name}: {e.message}")
 
 
-def test_garden_management():
+def test_garden_management() -> None:
     print("=== Garden Management System ===")
     manager = GardenManager()
 

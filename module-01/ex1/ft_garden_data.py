@@ -1,5 +1,6 @@
 #! /usr/bin/env python3
 
+
 class Plant:
     """
     A class to represent a plant in the garden.
@@ -8,12 +9,13 @@ class Plant:
         height_cm (int): The height of the plant in centimeters.
         age_days (int): The age of the plant in days.
     """
+
     def __init__(self, name: str, height_cm: int, age_days: int):
         self.name = name
         self.height_cm = height_cm
         self.age_days = age_days
 
-    def get_info(self):
+    def get_info(self) -> None:
         """
         Displays the plant's information in a formatted string.
         """
@@ -24,7 +26,7 @@ class Plant:
         )
 
 
-def ft_garden_data():
+def ft_garden_data() -> None:
     """
     This function creates a list of plants and displays their information.
     """

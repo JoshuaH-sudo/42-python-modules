@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-def ft_garden_intro():
+
+def ft_garden_intro() -> None:
     """
     This function introduces a simple garden with one plant.
     It prints the plant's name, height, and age.

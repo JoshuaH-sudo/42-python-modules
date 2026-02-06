@@ -21,7 +21,7 @@ class Plant:
         self.score = score
         self.type = plant_type
 
-    def get_info(self):
+    def get_info(self) -> str:
         """
         Displays the plant's information in a formatted string.
         Args:
@@ -56,7 +56,7 @@ class Flowering(Plant):
         super().__init__(name, height_cm, age_days, points, plant_type)
         self.color = color
 
-    def get_info(self):
+    def get_info(self) -> str:
         """
         Displays the flower's information including its color.
         """
@@ -65,7 +65,7 @@ class Flowering(Plant):
             f"{self.color} flowers (blooming)"
         )
 
-    def bloom(self):
+    def bloom(self) -> None:
         """
         Simulates the blooming of the flower.
         """
@@ -85,7 +85,7 @@ class prizeFlower(Flowering):
         )
         self.points = points
 
-    def get_info(self):
+    def get_info(self) -> str:
         """
         Displays the prize flower's information including its award.
         """
@@ -191,7 +191,7 @@ class GardenManager:
         """
         return self.gardens.get(owner)
 
-    def add_plant_to_garden(self, owner: str, plant: Plant):
+    def add_plant_to_garden(self, owner: str, plant: Plant) -> None:
         """
         Adds a plant to a specific garden.
         Args:
@@ -214,7 +214,7 @@ class GardenManager:
         if garden:
             self.GardenStats.print_garden_stats(garden)
 
-    def manager_report(self):
+    def manager_report(self) -> None:
         """
         Reports the overall statistics of all managed gardens.
         """
@@ -240,7 +240,7 @@ class GardenManager:
             print("")
 
         @staticmethod
-        def print_manager_stats(gardens: dict):
+        def print_manager_stats(gardens: dict) -> None:
             garden_count = 0
             height_validated = True
             for owner in gardens:
@@ -267,7 +267,7 @@ class GardenManager:
             print(f"Total gardens managed: {garden_count}")
 
 
-def ft_garden_analytics():
+def ft_garden_analytics() -> None:
     print("=== Garden Management System Demo ===\n")
 
     gardenManager = GardenManager.create_garden_network(["Alice", "Bob"])

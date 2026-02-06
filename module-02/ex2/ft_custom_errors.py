@@ -1,7 +1,7 @@
 class GardenError(Exception):
     """Base class for all garden-related errors."""
 
-    def __init__(self, message="An error occurred in the garden."):
+    def __init__(self, message: str = "An error occurred in the garden."):
         self.message = message
         super().__init__(self.message)
 
@@ -9,18 +9,18 @@ class GardenError(Exception):
 class PlantError(GardenError):
     """Exception raised for errors related to plants."""
 
-    def __init__(self, message="An error occurred with the plants."):
+    def __init__(self, message: str = "An error occurred with the plants."):
         super().__init__(message)
 
 
 class WaterError(GardenError):
     """Exception raised for errors related to watering."""
 
-    def __init__(self, message="An error occurred with watering."):
+    def __init__(self, message: str = "An error occurred with watering."):
         super().__init__(message)
 
 
-def ft_custom_errors():
+def ft_custom_errors() -> None:
     print("=== Custom Garden Errors Demo ===\n")
     try:
         print("Testing PlantError...")

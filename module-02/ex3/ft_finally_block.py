@@ -17,7 +17,7 @@ def water_plants(plant_list: list[str]):
     print("Watering completed successfully!")
 
 
-def test_watering_system():
+def test_watering_system() -> None:
     """
     Tests the watering system with both normal and error scenarios.
     """

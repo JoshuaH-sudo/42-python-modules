@@ -1,4 +1,4 @@
-def ft_harvest_total():
+def ft_harvest_total() -> None:
     max_days = 3
     day = 1
     total_harvest = 0

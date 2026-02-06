@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+
 class Plant:
     """
     A class to represent a plant in the garden.
@@ -14,7 +15,7 @@ class Plant:
         self.height_cm = height_cm
         self.age_days = age_days
 
-    def get_info(self, plant_type: str, extra_info: str = ""):
+    def get_info(self, plant_type: str, extra_info: str = "") -> None:
         """
         Displays the plant's information in a formatted string.
         Args:
@@ -40,13 +41,13 @@ class Flower(Plant):
         super().__init__(name, height_cm, age_days)
         self.color = color
 
-    def get_info(self):
+    def get_info(self) -> None:
         """
         Displays the flower's information including its color.
         """
         super().get_info("Flower", f"{self.color} color")
 
-    def bloom(self):
+    def bloom(self) -> None:
         """
         Simulates the blooming of the flower.
         """
@@ -68,13 +69,13 @@ class Tree(Plant):
         super().__init__(name, height_cm, age_days)
         self.trunk_diameter = trunk_diameter
 
-    def get_info(self):
+    def get_info(self) -> None:
         """
         Displays the tree's information including its trunk diameter.
         """
         super().get_info("Tree", f"{self.trunk_diameter}cm diameter")
 
-    def produce_shade(self):
+    def produce_shade(self) -> None:
         """
         Simulates the tree producing shade.
         """
@@ -98,7 +99,7 @@ class Vegetable(Plant):
         self.harvest_season = harvest_season
         self.nutritional_value = nutritional_value
 
-    def get_info(self):
+    def get_info(self) -> None:
         """
         Displays the vegetable's information including its harvest season
         and nutritional value.
@@ -107,7 +108,7 @@ class Vegetable(Plant):
         print(f"{self.name.capitalize()} is rich in {self.nutritional_value}")
 
 
-def ft_plant_types():
+def ft_plant_types() -> None:
     """
     Function to create multiple Plant instances of different types and
     display their information.

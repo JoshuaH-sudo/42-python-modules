@@ -16,7 +16,7 @@ def check_temperature(temp_str: str) -> int:
     return temp
 
 
-def test_temperature():
+def test_temperature() -> None:
     """
     Test the check_temperature function with various inputs.
     """

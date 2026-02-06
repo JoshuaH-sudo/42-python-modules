@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-class SecurePlant():
+class SecurePlant:
     """
     A class to represent a plant in the garden.
     Attributes:
@@ -7,13 +7,14 @@ class SecurePlant():
         height_cm (int): The height of the plant in centimeters.
         age_days (int): The age of the plant in days.
     """
+
     def __init__(self, name: str, height_cm: int, age_days: int):
         self._name = name
         print(f"Plant created: {self._name.capitalize()}")
         self.set_height(height_cm)
         self.set_age(age_days)
 
-    def get_height(self):
+    def get_height(self) -> int:
         """
         Returns the height of the plant.
         """
@@ -28,14 +29,14 @@ class SecurePlant():
         if height_cm < 0:
             print(
                 "Invalid operation attempted:",
-                f"height {height_cm}cm (REJECTED)"
+                f"height {height_cm}cm (REJECTED)",
             )
             print("Security: Negative height rejected")
             return
         self._height_cm = height_cm
         print(f"Height updated: {self._height_cm}cm [OK]")
 
-    def get_age(self):
+    def get_age(self) -> int:
         """
         Returns the age of the plant.
         """
@@ -50,7 +51,7 @@ class SecurePlant():
         if age_days < 0:
             print(
                 "Invalid operation attempted:",
-                f"age {age_days} days (REJECTED)"
+                f"age {age_days} days (REJECTED)",
             )
             print("Security: Negative age rejected")
             return
@@ -58,7 +59,7 @@ class SecurePlant():
         print(f"Age updated: {self._age_days} days [OK]")
 
 
-def ft_garden_security():
+def ft_garden_security() -> None:
     print("=== Garden Security System ===")
     rose = SecurePlant("rose", 25, 30)
     print("\n")
@@ -66,7 +67,7 @@ def ft_garden_security():
     print("\n")
     print(
         f"Current plant: {rose._name.capitalize()} ",
-        f"({rose.get_height()}cm, {rose.get_age()} days)"
+        f"({rose.get_height()}cm, {rose.get_age()} days)",
     )
 
 
