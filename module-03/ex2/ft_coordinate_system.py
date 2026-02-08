@@ -15,7 +15,8 @@ def parse_coordinates(coord_str: str) -> tuple[int, int, int]:
         x_str, y_str, z_str = coord_str.split(",")
         return int(x_str), int(y_str), int(z_str)
     except ValueError as e:
-        print(e.args)
+        print(f"Error parsing coordinates: {e}")
+        raise e
 
 
 def ft_coordinate_system() -> None:
@@ -26,7 +27,6 @@ def ft_coordinate_system() -> None:
         player_position = parse_coordinates(received_arguments[0])
         coordinates = parse_coordinates(received_arguments[1])
     except Exception as e:
-        print("Parsing invalid coordinates:", received_arguments)
         print(f"Error details - Type: {e.__class__.__name__}, Args: {e.args}")
         return None
     print(f"Position created: {player_position}")
