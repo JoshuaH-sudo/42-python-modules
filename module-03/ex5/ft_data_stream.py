@@ -1,10 +1,3 @@
-# This exercise requires the use of generators with the ’yield’
-# keyword to create memory-efficient data streams. You must implement
-# generator functions that produce values on-demand rather than storing
-# everything in memory
-
-# Authorized: next(), iter(), range(), len(), print()
-
 # import time
 
 events = ["level_up", "found_treasure", "killed_monster"]
