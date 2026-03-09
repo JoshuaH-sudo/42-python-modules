@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+from importlib import util
+from pathlib import Path
+
 """
 Helper file for Growing Code.
 
@@ -15,7 +18,31 @@ Make sure your exercise files are in the same folder as this main.py file!
 """
 
 
-def test_ft_exercise(exercise_file_name: str) -> None:
+EXERCISE_FOLDERS = {
+    "ft_hello_garden": "ex0",
+    "ft_plot_area": "ex1",
+    "ft_harvest_total": "ex2",
+    "ft_plant_age": "ex3",
+    "ft_water_reminder": "ex4",
+    "ft_count_harvest_iterative": "ex5",
+    "ft_count_harvest_recursive": "ex5",
+    "ft_garden_summary": "ex6",
+    "ft_seed_inventory": "ex7",
+}
+
+
+def _load_module_from_path(exercise_file_name, module_path):
+    """Load and return a module object from a specific file path."""
+    spec = util.spec_from_file_location(exercise_file_name, module_path)
+    if spec is None or spec.loader is None:
+        raise ImportError(f"Could not create import spec for {module_path}")
+
+    module = util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def test_ft_exercise(exercise_file_name):
     """
     This function tries to run one of your exercises.
 
@@ -27,9 +54,20 @@ def test_ft_exercise(exercise_file_name: str) -> None:
     print(f"\n=== Testing {exercise_file_name} ===")
 
     try:
-        # Import your exercise file
-        # This is like doing: import ft_plot_area
-        ft_module = __import__(exercise_file_name)
+        exercise_folder = EXERCISE_FOLDERS.get(exercise_file_name)
+        if exercise_folder is None:
+            raise ImportError(f"Unknown exercise: {exercise_file_name}")
+
+        module_path = (
+            Path(__file__).resolve().parent
+            / exercise_folder
+            / f"{exercise_file_name}.py"
+        )
+        if not module_path.exists():
+            raise ImportError(f"Missing exercise file: {module_path}")
+
+        # Import your exercise file from its ex* folder
+        ft_module = _load_module_from_path(exercise_file_name, module_path)
 
         # Get the function from your file
         # This is like doing: ft_plot_area.ft_plot_area
@@ -53,16 +91,14 @@ def test_ft_exercise(exercise_file_name: str) -> None:
             ft_function()
 
     except ImportError:
-        print(f"❌ Could not find {exercise_file_name}.py")
+        print(f"❌ Could not find {exercise_file_name}.py in its exercise folder")
         print(
-            """   Make sure your file exists and is in the same
-            folder as main.py"""
+            """   Make sure your file exists in the correct ex* folder
+            (for example: ex1/ft_plot_area.py)."""
         )
 
     except AttributeError:
-        print(
-            f"❌ Could not find function {exercise_file_name}() in your file"
-        )
+        print(f"❌ Could not find function {exercise_file_name}() in your file")
         print(f"   Make sure you have: def {exercise_file_name}():")
 
     except TypeError as error:
@@ -87,7 +123,7 @@ def test_ft_exercise(exercise_file_name: str) -> None:
         print("   Check your code for syntax errors")
 
 
-def main() -> None:
+def main():
     """Run main function - this runs when you execute: python3 main.py ."""
     print("🌱 Welcome to Growing Code! 🌱")
     print("This helper will test your exercises for you.")
