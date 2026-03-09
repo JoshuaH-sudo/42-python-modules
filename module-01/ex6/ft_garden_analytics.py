@@ -1,12 +1,4 @@
 class Plant:
-    """
-    A class to represent a plant in the garden.
-    Attributes:
-        name (str): The name of the plant.
-        height_cm (int): The height of the plant in centimeters.
-        age_days (int): The age of the plant in days.
-    """
-
     def __init__(
         self,
         name: str,
@@ -22,28 +14,14 @@ class Plant:
         self.type = plant_type
 
     def get_info(self) -> str:
-        """
-        Displays the plant's information in a formatted string.
-        Args:
-            extra_info (str): Additional information to display.
-        """
         return f"{self.name.capitalize()}: {self.height_cm}cm"
 
     def grow(self, cm: int):
-        """
-        Grows the plant by a specified number of centimeters.
-        Args:
-            cm (int): The number of centimeters to grow.
-        """
         self.height_cm += cm
         print(f"{self.name.capitalize()} grew {cm}cm")
 
 
 class Flowering(Plant):
-    """
-    A class to represent a flower, inheriting from Plant.
-    """
-
     def __init__(
         self,
         name: str,
@@ -57,26 +35,16 @@ class Flowering(Plant):
         self.color = color
 
     def get_info(self) -> str:
-        """
-        Displays the flower's information including its color.
-        """
         return (
             f"{self.name.capitalize()}: {self.height_cm}cm, "
             f"{self.color} flowers (blooming)"
         )
 
     def bloom(self) -> None:
-        """
-        Simulates the blooming of the flower.
-        """
         print(f"{self.name.capitalize()} is blooming beautifully!")
 
 
 class prizeFlower(Flowering):
-    """
-    A class to represent a prize flower, inheriting from Flower.
-    """
-
     def __init__(
         self, name: str, height_cm: int, age_days: int, color: str, points: int
     ):
@@ -86,9 +54,6 @@ class prizeFlower(Flowering):
         self.points = points
 
     def get_info(self) -> str:
-        """
-        Displays the prize flower's information including its award.
-        """
         return (
             f"{self.name.capitalize()}: {self.height_cm}cm, "
             f"{self.color} flowers (blooming), "
@@ -97,10 +62,6 @@ class prizeFlower(Flowering):
 
 
 class Garden:
-    """
-    A class to represent a garden containing multiple plants.
-    """
-
     owner: str
     plants: list[Plant] = []
     total_growth: int = 0
@@ -114,11 +75,6 @@ class Garden:
         self.plants = []
 
     def add_plant(self, plant: Plant):
-        """
-        Adds a plant to the garden.
-        Args:
-            plant (Plant): The plant to add.
-        """
         self.plants.append(plant)
         self.total_points += plant.score
         if plant.type == "prize flowers":
@@ -133,23 +89,12 @@ class Garden:
         )
 
     def get_plant_count(self) -> int:
-        """
-        Returns the number of plants in the garden.
-        Returns:
-            int: The number of plants.
-        """
         count = 0
         for _ in self.plants:
             count += 1
         return count
 
     def grow_all(self, cm: int):
-        """
-        Grows all plants in the garden by a specified number of centimeters.
-        Args:
-            cm (int): The number of centimeters to grow each plant.
-        """
-
         print(
             f"{self.owner.capitalize()} is helping all plants grow...",
         )
@@ -160,10 +105,6 @@ class Garden:
 
 
 class GardenManager:
-    """
-    A class to manage multiple gardens.
-    """
-
     gardens = dict[Garden]()
 
     def __init__(self, gardens: dict):
@@ -171,33 +112,15 @@ class GardenManager:
 
     @classmethod
     def create_garden_network(cls, owners: list[str]):
-        """
-        Creates a new garden for the specified owner.
-        Args:
-            owners (list[str]): List of garden owners.
-        """
         new_gardens = dict()
         for owner in owners:
             new_gardens[owner] = Garden(owner)
         return cls(new_gardens)
 
     def get_garden(self, owner: str) -> Garden:
-        """
-        Retrieves a garden by owner name.
-        Args:
-            owner (str): The owner's name.
-        Returns:
-            Garden: The garden belonging to the owner.
-        """
         return self.gardens.get(owner)
 
     def add_plant_to_garden(self, owner: str, plant: Plant) -> None:
-        """
-        Adds a plant to a specific garden.
-        Args:
-            owner (str): The owner's name.
-            plant (Plant): The plant to add.
-        """
         garden = self.get_garden(owner)
         stats = self.get_garden_stats(owner)
         if garden:
@@ -205,19 +128,11 @@ class GardenManager:
             stats.record_plant(plant)
 
     def garden_report(self, owner: str):
-        """
-        Reports the statistics of a specific garden.
-        Args:
-            owner (str): The owner's name.
-        """
         garden = self.get_garden(owner)
         if garden:
             self.GardenStats.print_garden_stats(garden)
 
     def manager_report(self) -> None:
-        """
-        Reports the overall statistics of all managed gardens.
-        """
         self.GardenStats.print_manager_stats(self.gardens)
 
     class GardenStats:

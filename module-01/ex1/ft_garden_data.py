@@ -2,23 +2,12 @@
 
 
 class Plant:
-    """
-    A class to represent a plant in the garden.
-    Attributes:
-        name (str): The name of the plant.
-        height_cm (int): The height of the plant in centimeters.
-        age_days (int): The age of the plant in days.
-    """
-
     def __init__(self, name: str, height_cm: int, age_days: int):
         self.name = name
         self.height_cm = height_cm
         self.age_days = age_days
 
     def get_info(self) -> None:
-        """
-        Displays the plant's information in a formatted string.
-        """
         print(
             f"{self.name.capitalize()}: "
             f"{self.height_cm}cm, "
@@ -27,9 +16,6 @@ class Plant:
 
 
 def ft_garden_data() -> None:
-    """
-    This function creates a list of plants and displays their information.
-    """
     rose = Plant("rose", 25, 30)
     sunflower = Plant("sunflower", 80, 45)
     cactus = Plant("cactus", 15, 120)

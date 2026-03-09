@@ -2,25 +2,12 @@
 
 
 class Plant:
-    """
-    A class to represent a plant in the garden.
-    Attributes:
-        name (str): The name of the plant.
-        height_cm (int): The height of the plant in centimeters.
-        age_days (int): The age of the plant in days.
-    """
-
     def __init__(self, name: str, height_cm: int, age_days: int):
         self.name = name
         self.height_cm = height_cm
         self.age_days = age_days
 
     def get_info(self, plant_type: str, extra_info: str = "") -> None:
-        """
-        Displays the plant's information in a formatted string.
-        Args:
-            extra_info (str): Additional information to display.
-        """
         info = (
             f"{self.name.capitalize()} "
             f"({plant_type.capitalize()}): "
@@ -33,32 +20,18 @@ class Plant:
 
 
 class Flower(Plant):
-    """
-    A class to represent a flower, inheriting from Plant.
-    """
-
     def __init__(self, name: str, height_cm: int, age_days: int, color: str):
         super().__init__(name, height_cm, age_days)
         self.color = color
 
     def get_info(self) -> None:
-        """
-        Displays the flower's information including its color.
-        """
         super().get_info("Flower", f"{self.color} color")
 
     def bloom(self) -> None:
-        """
-        Simulates the blooming of the flower.
-        """
         print(f"{self.name.capitalize()} is blooming beautifully!")
 
 
 class Tree(Plant):
-    """
-    A class to represent a tree, inheriting from Plant.
-    """
-
     def __init__(
         self,
         name: str,
@@ -70,23 +43,13 @@ class Tree(Plant):
         self.trunk_diameter = trunk_diameter
 
     def get_info(self) -> None:
-        """
-        Displays the tree's information including its trunk diameter.
-        """
         super().get_info("Tree", f"{self.trunk_diameter}cm diameter")
 
     def produce_shade(self) -> None:
-        """
-        Simulates the tree producing shade.
-        """
         print(f"{self.name.capitalize()} provides 78 square meters of shade")
 
 
 class Vegetable(Plant):
-    """
-    A class to represent a vegetable, inheriting from Plant.
-    """
-
     def __init__(
         self,
         name: str,
@@ -100,19 +63,11 @@ class Vegetable(Plant):
         self.nutritional_value = nutritional_value
 
     def get_info(self) -> None:
-        """
-        Displays the vegetable's information including its harvest season
-        and nutritional value.
-        """
         super().get_info("Vegetable", f"{self.harvest_season} harvest")
         print(f"{self.name.capitalize()} is rich in {self.nutritional_value}")
 
 
 def ft_plant_types() -> None:
-    """
-    Function to create multiple Plant instances of different types and
-    display their information.
-    """
     flower = Flower("rose", 25, 30, "red")
     tree = Tree("oak", 500, 1825, 50)
     vegetable = Vegetable("tomato", 80, 90, "summer", "Vitamin C")
