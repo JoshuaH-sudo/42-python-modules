@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-
-
 def ft_garden_intro() -> None:
     plant_name = "rose"
     plant_height = 25
