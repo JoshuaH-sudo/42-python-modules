@@ -10,17 +10,17 @@ def water_plants(plant_list: list[str]):
                 raise ValueError("Invalid plant: None")
             print(f"Watering {plant}")
     except Exception:
-        print(f"Error: Cannot water {plant} - invalid plant")
+        print(f"Error: Cannot water {plant} - invalid plant!")
     finally:
         print("Closing water system (cleanup)")
         return
-    print("Watering completed successfully!")
 
 
 def test_watering_system() -> None:
     """
     Tests the watering system with both normal and error scenarios.
     """
+    print("=== Garden Watering System ===\n")
     print("Testing normal watering...")
     plants = ["tomato", "lettuce", "carrots"]
     water_plants(plants)
