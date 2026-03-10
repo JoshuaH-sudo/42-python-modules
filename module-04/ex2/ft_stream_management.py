@@ -2,7 +2,7 @@
 import sys
 
 def ft_stream_management() -> None:
-	print("=== CYBER ARCHIVES - COMMUNICATION ===\n")
+	print("=== CYBER ARCHIVES - COMMUNICATION SYSTEM ===\n")
 	try:
 		archivist_id = accept_input("Enter archivist ID: ")
 		status_report = accept_input("Enter status report: ")
