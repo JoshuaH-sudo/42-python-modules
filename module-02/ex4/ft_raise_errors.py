@@ -22,6 +22,7 @@ def check_plant_health(
 
 
 def test_plant_checks() -> None:
+    print("=== Garden Plant Health Checker ===\n")
     # Test with valid inputs
     try:
         print("Testing good values...")
