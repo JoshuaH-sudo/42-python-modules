@@ -59,7 +59,7 @@ def ft_analytics_dashboard() -> None:
             active_players.append(entry["player"])
 
     print(f"High scores (>2000): {high_scores}")
-    print(f"Doubled scores: {doubled_scores}")
+    print(f"Scores doubled: {doubled_scores}")
     print(f"Active players: {active_players}")
 
     print("\n=== Dictionary Comprehension Example ===")
