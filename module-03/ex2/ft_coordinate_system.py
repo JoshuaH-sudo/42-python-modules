@@ -1,4 +1,3 @@
-import sys
 import math
 
 
@@ -20,35 +19,34 @@ def parse_coordinates(coord_str: str) -> tuple[int, int, int]:
 
 
 def ft_coordinate_system() -> None:
-    print("=== Game Coordinate System ===\n")
-    received_arguments = sys.argv[1:]
+    print("=== Game Coordinate System ===")
+    player_position = (10, 20, 5)
 
-    try:
-        player_position = parse_coordinates(received_arguments[0])
-        coordinates = parse_coordinates(received_arguments[1])
-    except Exception as e:
-        print(f"Error details - Type: {e.__class__.__name__}, Args: {e.args}")
-        return None
     print(f"Position created: {player_position}")
     distance_from_origin = calculate_distance((0, 0, 0), player_position)
-    print(
-        f"Distance between (0, 0, 0) and {player_position}:",
-        f"{distance_from_origin:.2f}\n",
-    )
+    print(f"Distance between (0, 0, 0) and {player_position}: {distance_from_origin:.2f}")
+    print("")
 
-    print(f'Position coordinates: "{received_arguments[1]}"')
+    coordinates_str = "3,4,0"
+    print(f'Parsing coordinates: "{coordinates_str}"')
+    coordinates = parse_coordinates(coordinates_str)
     print(f"Parsed position: {coordinates}")
     position_from_origin = calculate_distance((0, 0, 0), coordinates)
-    print(
-        f"Distance between (0, 0, 0) and {coordinates}:",
-        f"{position_from_origin:.1f}",
-    )
+    print(f"Distance between (0, 0, 0) and {coordinates}: {position_from_origin:.1f}")
+    print("")
 
-    print("\nUnpacking demonstration:")
-    x, y, z = player_position
-    print(f"Player at x={x}, y={y}, z={z}")
+    invalid_coordinates_str = "abc,def,ghi"
+    print(f'Parsing invalid coordinates: "{invalid_coordinates_str}"')
+    try:
+        parse_coordinates(invalid_coordinates_str)
+    except Exception as e:
+        print(f"Error details - Type: {e.__class__.__name__}, Args: {e.args}")
+    print("")
+
+    print("Unpacking demonstration:")
     x, y, z = coordinates
-    print(f"Coordinates at X={x}, Y={y}, Z={z}")
+    print(f"Player at x={x}, y={y}, z={z}")
+    print(f"Coordinates: X={x}, Y={y}, Z={z}")
 
 
 if __name__ == "__main__":
