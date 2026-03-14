@@ -121,7 +121,23 @@ def stream_processor():
     testLogData = "ERROR: Connection timeout"
     print(logProcessor.process(testLogData), "\n")
 
-    print("=== Polymorphic Processing Demo ===")
+    print("=== Polymorphic Processing Demo ===\n")
+    print("Processing multiple data through same interface...")
+
+    print("\nFoundation systems online. Nexus ready for advance streams.")
+    processors: List[DataProcessor] = [
+        NumericProcessor,
+        TextProcessor,
+        LogProcessor,
+    ]
+    dataSamples = [
+        [10, 20, 30],
+        "Nexus Polymorphism Test",
+        "WARNING: High memory usage detected",
+    ]
+    for i in range(len(processors)):
+        print(f"Result {i+1}:")
+        processors[i]().process(dataSamples[i])
 
 
 if __name__ == "__main__":
