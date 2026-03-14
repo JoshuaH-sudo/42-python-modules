@@ -1,3 +1,6 @@
+import sys
+
+
 def pluralize(unit: int, singular: str, plural: str) -> str:
     return singular if unit == 1 else plural
 
@@ -82,10 +85,21 @@ class InventoryManagement:
         print()
 
 
+def parse_arguments(args: list[str]) -> dict[str, int]:
+    inventory = {}
+    for arg in args:
+        try:
+            item, quantity_str = arg.split(":")
+            quantity = int(quantity_str)
+            inventory[item] = quantity
+        except ValueError as e:
+            print(f"Error parsing argument '{arg}': {e}")
+    return inventory
+
 def ft_inventory_system() -> None:
-    inventoryManagement = InventoryManagement(
-        {"potion": 5, "armor": 3, "shield": 2, "sword": 1, "helmet": 1}
-    )
+    #inventory_data = {"potion": 5, "armor": 3, "shield": 2, "sword": 1, "helmet": 1}
+    inventory_data = parse_arguments(sys.argv[1:])
+    inventoryManagement = InventoryManagement(inventory_data)
     print("=== Inventory System Analysis ===")
     print(f"Total items in inventory: {inventoryManagement.get_total_items()}")
     print(f"Unique items types: {inventoryManagement.get_unique_items()}")
