@@ -12,8 +12,10 @@ def ft_crisis_response() -> None:
             print("Access granted to lost archive. Retrieving data...\n")
             for line in file:
                 print(line.strip())
-    except IOError:
+    except FileNotFoundError:
         print("RESPONSE: Archive not found in storage martix")
+    except IOError as error:
+        print(f"RESPONSE: Unexpected error accessing lost archive - {error}")
     finally:
         print("STATUS: Crisis handled, system stable")
 
@@ -24,8 +26,12 @@ def ft_crisis_response() -> None:
             print("Access granted to forbidden archive. Retrieving data...\n")
             for line in file:
                 print(line.strip())
-    except IOError:
-        print("RESPONSE: Secuirty protocols deny access")
+    except PermissionError:
+        print("RESPONSE: Security protocols deny access")
+    except IOError as error:
+        print(
+            f"RESPONSE: Unexpected error accessing forbidden archive - {error}"
+        )
     finally:
         print("STATUS: Crisis handled, system maintained")
 
