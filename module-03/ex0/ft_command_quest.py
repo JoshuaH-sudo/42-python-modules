@@ -11,7 +11,7 @@ def ft_command_quest() -> None:
         print("No arguments provided!")
     print(f"Program name: {program_name}")
 
-    if received_arguments > 1:
+    if received_arguments > 0:
         print(f"Arguments received: {received_arguments}")
 
     i = 1
