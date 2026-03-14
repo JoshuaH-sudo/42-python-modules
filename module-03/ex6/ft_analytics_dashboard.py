@@ -46,60 +46,44 @@ def ft_analytics_dashboard() -> None:
     ]
 
     print("=== List Comprehension Examples ===")
-    high_scores = []
-    for entry in game_data:
-        if entry["score"] > 2000:
-            high_scores.append(entry["player"])
-    doubled_scores = []
-    for entry in game_data:
-        doubled_scores.append(entry["score"] * 2)
-    active_players = []
-    for entry in game_data:
-        if entry["isActive"]:
-            active_players.append(entry["player"])
+    high_scores = [
+        entry["player"] for entry in game_data if entry["score"] > 2000
+    ]
+    doubled_scores = [entry["score"] * 2 for entry in game_data]
+    active_players = [
+        entry["player"] for entry in game_data if entry["isActive"]
+    ]
 
     print(f"High scores (>2000): {high_scores}")
     print(f"Scores doubled: {doubled_scores}")
     print(f"Active players: {active_players}")
 
     print("\n=== Dictionary Comprehension Example ===")
-    dict_data = {entry["player"]: entry for entry in game_data}
-    player_scores = {
-        player: info["score"] for player, info in dict_data.items()
-    }
+    players = {entry["player"]: entry for entry in game_data}
+    player_scores = {player: info["score"] for player, info in players.items()}
     score_categories = {
-        "high": 0,
-        "medium": 0,
-        "low": 0,
+        player: (
+            "high"
+            if info["score"] >= 2000
+            else "medium" if info["score"] >= 1000 else "low"
+        )
+        for player, info in players.items()
     }
-    for info in dict_data.values():
-        if info["score"] >= 2000:
-            score_categories["high"] += 1
-        elif info["score"] >= 1000:
-            score_categories["medium"] += 1
-        else:
-            score_categories["low"] += 1
-    achievement_counts = {}
-    for player in dict_data.keys():
-        count = len(dict_data[player]["achievements"])
-        achievement_counts[player] = count
-
+    achievement_counts = {
+        player: len(info["achievements"]) for player, info in players.items()
+    }
     print(f"Player scores: {player_scores}")
     print(f"Score categories: {score_categories}")
     print(f"Achievement counts: {achievement_counts}")
 
     print("\n=== Set Comprehension Example ===")
-    unique_players = set()
-    for entry in game_data:
-        unique_players.add(entry["player"])
-    unique_achievements = set()
-    for entry in game_data:
-        for achievement in entry["achievements"]:
-            unique_achievements.add(achievement)
-    active_regions = set()
-    for entry in game_data:
-        active_regions.add(entry["region"])
-
+    unique_players = {entry["player"] for entry in game_data}
+    unique_achievements = {
+        achievement
+        for entry in game_data
+        for achievement in entry["achievements"]
+    }
+    active_regions = {entry["region"] for entry in game_data}
     print(f"Unique players: {unique_players}")
     print(f"Unique achievements: {unique_achievements}")
     print(f"Active regions: {active_regions}")
