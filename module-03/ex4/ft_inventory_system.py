@@ -93,7 +93,7 @@ def parse_arguments(args: list[str]) -> dict[str, int]:
             quantity = int(quantity_str)
             inventory[item] = quantity
         except ValueError as e:
-            print(f"Error parsing argument '{arg}': {e}")
+            print(f"Error parsing argument (SKIPPING) '{arg}': {e}")
     return inventory
 
 def ft_inventory_system() -> None:
