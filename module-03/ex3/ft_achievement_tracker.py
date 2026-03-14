@@ -10,16 +10,21 @@ allowed_achievements = {
     Achievement("level_10"),
     Achievement("speed_demon"),
     Achievement("treasure_hunter"),
+}
+
+rare_achievements = {
     Achievement("collector", True),
     Achievement("perfectionist", True),
 }
+
+all_achievements = allowed_achievements.union(rare_achievements)
 
 
 class Player:
     def __init__(self, name: str, achievements: list[str]) -> None:
         self.name = name
         for achievement in achievements:
-            if achievement not in [a.name for a in allowed_achievements]:
+            if achievement not in [a.name for a in all_achievements]:
                 raise ValueError(f"Invalid achievement: {achievement}")
         self.achievements = set(achievements)
 
@@ -44,16 +49,16 @@ class AchievementAnalyzer:
         return common
 
     def players_with_rare_achievements(self) -> list[str]:
-        rare_achievements = {a.name for a in allowed_achievements if a.is_rare}
+        rare_achievements_names = {a.name for a in rare_achievements}
         players_with_rare = []
         for player in self.players:
-            if player.achievements.intersection(rare_achievements):
+            if player.achievements.intersection(rare_achievements_names):
                 players_with_rare.append(player.name)
         return players_with_rare
 
 
 def ft_achievement_tracker() -> None:
-    print("=== Achievement Tracker ===\n")
+    print("=== Achievement Tracker System ===\n")
 
     alice = Player(
         "Alice", {"first_kill", "level_10", "treasure_hunter", "speed_demon"}
@@ -78,7 +83,7 @@ def ft_achievement_tracker() -> None:
 
     common = analyzer.common_achievements_all()
     achievement_names = {a.name for a in allowed_achievements}
-    rare_achievements = {a.name for a in allowed_achievements if a.is_rare}
+    rare_achievements_names = {a.name for a in rare_achievements}
     players_with_rare = analyzer.players_with_rare_achievements()
 
     print(f"All unique achievements: {achievement_names}")
@@ -88,12 +93,12 @@ def ft_achievement_tracker() -> None:
     print(f"Common to all players: {common}")
     print(
         f"Rare achievements: ({len(players_with_rare)} player)",
-        f"{rare_achievements}",
+        f"{rare_achievements_names}",
     )
     print()
 
     print("Alice vs Bob common:", analyzer.common_achievements(alice, bob))
-    print("Alice unique:", alice.achievements - bob.achievements)
+    print("Alice unique:", alice.achievements.difference(bob.achievements))
     print("Bob unique:", bob.achievements - alice.achievements)
 
 
