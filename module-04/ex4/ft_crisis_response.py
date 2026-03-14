@@ -30,7 +30,7 @@ def ft_crisis_response() -> None:
 		print("STATUS: Crisis handled, system maintained")
 
 	# Access file with permissions
-	print(f"\nCRISIS ALERT: Attempting access to '{standard_file_name}'...")
+	print(f"\nROUTINE ACCESS: Attempting access to '{standard_file_name}'...")
 	try:
 		with open(standard_file_name, 'r') as file:
 			print("Archived recovered - ", end="")
