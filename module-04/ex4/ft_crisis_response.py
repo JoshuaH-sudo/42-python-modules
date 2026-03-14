@@ -29,6 +29,7 @@ def ft_crisis_response() -> None:
     except PermissionError:
         print("RESPONSE: Security protocols deny access")
     except IOError as error:
+        # Make sure file exists with read permissions removed to test.
         print(
             f"RESPONSE: Unexpected error accessing forbidden archive - {error}"
         )
