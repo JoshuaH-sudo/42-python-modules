@@ -36,8 +36,10 @@ def ft_crisis_response() -> None:
             print("Archived recovered - ", end="")
             for line in file:
                 print(f"''{line.strip()}''")
-    except IOError:
-        print("RESPONSE: Unexpected error accessing standard archive")
+    except IOError as error:
+        print(
+            f"RESPONSE: Unexpected error accessing standard archive - {error}"
+        )
     finally:
         print("STATUS: Normal operations resumed")
 
