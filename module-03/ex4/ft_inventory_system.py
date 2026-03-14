@@ -96,8 +96,15 @@ def parse_arguments(args: list[str]) -> dict[str, int]:
             print(f"Error parsing argument (SKIPPING) '{arg}': {e}")
     return inventory
 
+
 def ft_inventory_system() -> None:
-    #inventory_data = {"potion": 5, "armor": 3, "shield": 2, "sword": 1, "helmet": 1}
+    # inventory_data = {
+    #     "potion": 5,
+    #     "armor": 3,
+    #     "shield": 2,
+    #     "sword": 1,
+    #     "helmet": 1,
+    # }
     inventory_data = parse_arguments(sys.argv[1:])
     inventoryManagement = InventoryManagement(inventory_data)
     print("=== Inventory System Analysis ===")

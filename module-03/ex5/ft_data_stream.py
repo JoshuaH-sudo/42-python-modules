@@ -5,13 +5,17 @@ import typing
 events = ["level_up", "found_treasure", "killed_monster"]
 players = ["Alice", "Bob", "Charlie"]
 
+
 class DataProcessor:
     event_processed = 0
     high_level_players = 0
     treasure_events = 0
     level_up_events = 0
 
-    def process_data(self, data_stream: typing.Generator[typing.Tuple[str, str, int], None, None]) -> None:
+    def process_data(
+        self,
+        data_stream: typing.Generator[typing.Tuple[str, str, int], None, None],
+    ) -> None:
         for event, player, level in data_stream:
             self.event_processed += 1
             print(
@@ -26,7 +30,9 @@ class DataProcessor:
                 self.level_up_events += 1
 
 
-def event_stream(n: int) -> typing.Generator[typing.Tuple[str, str, int], None, None]:
+def event_stream(
+    n: int,
+) -> typing.Generator[typing.Tuple[str, str, int], None, None]:
     for i in range(n):
         event = events[i % len(events)]
         player = players[i % len(players)]

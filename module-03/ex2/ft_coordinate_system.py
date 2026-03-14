@@ -24,7 +24,10 @@ def ft_coordinate_system() -> None:
 
     print(f"Position created: {player_position}")
     distance_from_origin = calculate_distance((0, 0, 0), player_position)
-    print(f"Distance between (0, 0, 0) and {player_position}: {distance_from_origin:.2f}")
+    print(
+        "Distance between (0, 0, 0) and",
+        f"{player_position}: {distance_from_origin:.2f}",
+    )
     print("")
 
     coordinates_str = "3,4,0"
@@ -32,7 +35,10 @@ def ft_coordinate_system() -> None:
     coordinates = parse_coordinates(coordinates_str)
     print(f"Parsed position: {coordinates}")
     position_from_origin = calculate_distance((0, 0, 0), coordinates)
-    print(f"Distance between (0, 0, 0) and {coordinates}: {position_from_origin:.1f}")
+    print(
+        "Distance between (0, 0, 0) and",
+        f"{coordinates}: {position_from_origin:.1f}",
+    )
     print("")
 
     invalid_coordinates_str = "abc,def,ghi"
