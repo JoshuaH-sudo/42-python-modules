@@ -1,8 +1,10 @@
 # import time
 
+import typing
+
+
 events = ["level_up", "found_treasure", "killed_monster"]
 players = ["Alice", "Bob", "Charlie"]
-
 
 class DataProcessor:
     event_processed = 0
@@ -10,7 +12,7 @@ class DataProcessor:
     treasure_events = 0
     level_up_events = 0
 
-    def process_data(self, data_stream):
+    def process_data(self, data_stream: typing.Generator[typing.Tuple[str, str, int], None, None]) -> None:
         for event, player, level in data_stream:
             self.event_processed += 1
             print(
@@ -25,7 +27,7 @@ class DataProcessor:
                 self.level_up_events += 1
 
 
-def event_stream(n: int):
+def event_stream(n: int) -> typing.Generator[typing.Tuple[str, str, int], None, None]:
     for i in range(n):
         event = events[i % len(events)]
         player = players[i % len(players)]
@@ -33,14 +35,14 @@ def event_stream(n: int):
         yield (event, player, level)
 
 
-def fibonacci(n: int):
+def fibonacci(n: int) -> typing.Generator[int, None, None]:
     a, b = 0, 1
     for _ in range(n):
         yield a
         a, b = b, a + b
 
 
-def primes(n: int):
+def primes(n: int) -> typing.Generator[int, None, None]:
     count = 0
     num = 2
     while count < n:
@@ -73,19 +75,13 @@ def ft_data_stream() -> None:
 
     print("\n=== Generator Demonstration ===")
     fib_stream = fibonacci(10)
-    fib_list = list(fib_stream)
+    fib_values = [str(next(fib_stream)) for _ in range(10)]
     separator = ", "
-    print(
-        "Fibonacci sequence (first 10):",
-        f"{separator.join(str(num) for num in fib_list)}",
-    )
+    print("Fibonacci sequence (first 10):", f"{separator.join(fib_values)}")
 
     prime_stream = primes(5)
-    prime_list = list(prime_stream)
-    print(
-        "Prime numbers (first 5):",
-        f"{separator.join(str(num) for num in prime_list)}",
-    )
+    prime_values = [str(next(prime_stream)) for _ in range(5)]
+    print("Prime numbers (first 5):", f"{separator.join(prime_values)}")
 
 
 if __name__ == "__main__":
