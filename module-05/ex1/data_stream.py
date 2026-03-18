@@ -142,24 +142,51 @@ class EventStream(DataStream):
 
 
 class StreamProcessor:
+    total_sensor_records: int
+    total_transaction_records: int
+    total_event_records: int
     streams: List[DataStream]
 
     def __init__(self):
         self.streams = []
+        self.total_sensor_records = 0
+        self.total_transaction_records = 0
+        self.total_event_records = 0
 
     def add_stream(self, stream: DataStream, data_type: str):
         print(f"Stream ID: {stream.stream_id} type: {data_type}")
         self.streams.append({"stream": stream, "type": data_type})
 
-    def process_stream(self, data: List[Any]) -> str:
+    def process_stream(self, data: List[Any]) -> None:
         for stream_dict in self.streams:
             stream = stream_dict["stream"]
             try:
                 results = stream.filter_data(data)
                 if results and len(results) > 0:
                     stream.process_batch(results)
+                    match stream:
+                        case SensorStream():
+                            self.total_sensor_records += (
+                                stream.number_of_records
+                            )
+                        case TransactionStream():
+                            self.total_transaction_records += (
+                                stream.number_of_records
+                            )
+                        case EventStream():
+                            self.total_event_records += (
+                                stream.number_of_records
+                            )
             except Exception:
                 continue
+
+        print(
+            "Batch 1 Results:",
+            f"- Sensor data: {self.total_sensor_records} readings processed,",
+            f"- Transaction data: {self.total_transaction_records} operations processed,",
+            f"- Event data: {self.total_event_records} events processed",
+            sep="\n",
+        )
 
 
 def demo():
@@ -201,20 +228,20 @@ def demo():
     event_stream.get_stats()
     print()
 
-    print("=== Polymorphic Stream Processing ===\n")
-    print("Processing mixed stream types through unified interface...")
+    print("=== Polymorphic Stream Processing ===")
+    print("Processing mixed stream types through unified interface...\n")
 
     mixed_data = [
         {"temp": 25.0},
         {"buy": 200.0},
         {"humidity": 70},
         {"sell": 250.0},
-        {"pressure": 1010},
+        {"buy": 200.0},
         "login",
         "error: disk full",
-        {"temp": 20.0},
+        "logout",
+        {"buy": 42.0},
     ]
-
     stream_processor.process_stream(mixed_data)
 
 
