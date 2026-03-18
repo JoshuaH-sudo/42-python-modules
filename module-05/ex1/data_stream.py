@@ -54,14 +54,18 @@ class SensorStream(DataStream):
         self.average_temp = sum(
             [item.get("temp", 0) for item in temp_records]
         ) / len(temp_records)
-        return self.get_stats()
 
     def filter_data(
         self,
         data_batch: List[Dict[str, float]],
-        criteria: List[str] = ["temp", "humidity", "pressure"],
+        criteria: Union[str, List[str]] = ["temp", "humidity", "pressure"],
     ) -> List[Dict[str, float]]:
-        return super().filter_data(data_batch, criteria)
+        keys = [criteria] if isinstance(criteria, str) else criteria
+        return [
+            item
+            for item in data_batch
+            if isinstance(item, dict) and any(key in item for key in keys)
+        ]
 
     def get_stats(self) -> Dict[str, Union[str, int, float]]:
         print(
@@ -71,6 +75,8 @@ class SensorStream(DataStream):
 
 
 class TransactionStream(DataStream):
+    net_units: float
+
     def __init__(self, stream_id: str):
         super().__init__(stream_id)
         self.net_units = 0
@@ -84,8 +90,7 @@ class TransactionStream(DataStream):
         self.number_of_records = len(data_batch)
         total_buy = sum(item.get("buy", 0) for item in data_batch)
         total_sell = sum(item.get("sell", 0) for item in data_batch)
-        self.net_units = total_sell - total_buy
-        return self.get_stats()
+        self.net_units = total_buy - total_sell
 
     def filter_data(
         self,
@@ -99,9 +104,7 @@ class TransactionStream(DataStream):
         ]
 
     def get_stats(self) -> Dict[str, Union[str, int, float]]:
-        symbol = (
-            "+" if self.net_units > 0 else "-" if self.net_units < 0 else "0"
-        )
+        symbol = "+" if self.net_units > 0 else ""
         print(
             f"Transaction analytics: {self.number_of_records} operations,",
             f"net flow: {symbol}{self.net_units:.2f} units",
@@ -117,7 +120,12 @@ class EventStream(DataStream):
         data_batch: List[str],
         criteria: List[str] = ["login", "error", "logout"],
     ) -> List[str]:
-        return super().filter_data(data_batch, criteria)
+        return [
+            item
+            for item in data_batch
+            if isinstance(item, str)
+            and any(keyword in item for keyword in criteria)
+        ]
 
     def process_batch(self, data_batch: List[str]) -> str:
         if not data_batch:
@@ -125,7 +133,6 @@ class EventStream(DataStream):
 
         self.number_of_records = len(data_batch)
         self.error_count = sum(1 for item in data_batch if "error" in item)
-        return self.get_stats()
 
     def get_stats(self) -> Dict[str, Union[str, int, float]]:
         print(
@@ -149,9 +156,9 @@ class StreamProcessor:
             stream = stream_dict["stream"]
             try:
                 results = stream.filter_data(data)
-                stream.process_batch(results)
-            except Exception as e:
-                print(f"Error processing stream {stream.stream_id}: {e}")
+                if results and len(results) > 0:
+                    stream.process_batch(results)
+            except Exception:
                 continue
 
 
@@ -169,6 +176,7 @@ def demo():
     ]
     print(f"Processing sensor batch: {sensor_data}")
     sensor_stream.process_batch(sensor_data)
+    sensor_stream.get_stats()
     print()
 
     print("Initializing Transaction Stream...")
@@ -177,10 +185,11 @@ def demo():
     transaction_data = [
         {"buy": 100.0},
         {"sell": 150.0},
-        {"buy": 50.0},
+        {"buy": 75.0},
     ]
     print(f"Processing transaction batch: {transaction_data}")
     transaction_stream.process_batch(transaction_data)
+    transaction_stream.get_stats()
     print()
 
     print("Initializing Event Stream...")
@@ -189,6 +198,7 @@ def demo():
     event_data = ["login", "error", "logout"]
     print(f"Processing event batch: {event_data}")
     event_stream.process_batch(event_data)
+    event_stream.get_stats()
     print()
 
     print("=== Polymorphic Stream Processing ===\n")
