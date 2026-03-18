@@ -19,14 +19,7 @@ class DataProcessor(ABC):
 
 
 class NumericProcessor(DataProcessor):
-    def __init__(self):
-        print("Initializing Numeric Processor...")
-
     def process(self, data: List[int]) -> str:
-        super().process(data)
-
-        if not self.validate(data):
-            return "Invalid data: All items must be integers."
         length = data.__len__()
         sumValues = sum(data)
         average = sumValues / length
@@ -48,14 +41,7 @@ class NumericProcessor(DataProcessor):
 
 
 class TextProcessor(DataProcessor):
-    def __init__(self):
-        print("Initializing Text Processor...")
-
     def process(self, data: str) -> str:
-        super().process(data)
-
-        if not self.validate(data):
-            return "Invalid data: Input must be a string."
         length = len(data)
         numOfWords = len(data.split())
         result = f"Processed text: {length} charcters, {numOfWords} words"
@@ -74,14 +60,7 @@ class TextProcessor(DataProcessor):
 class LogProcessor(DataProcessor):
     logLevels = ["ERROR", "WARNING", "INFO"]
 
-    def __init__(self):
-        print("Initializing Log Processor...")
-
     def process(self, data: str) -> str:
-        super().process(data)
-
-        if not self.validate(data):
-            return "Invalid data: Input must be a string."
         log_level = self.get_log_level(data)
         log_msg = data.split(": ", 1)[1]
         result = f"[ALERT] {log_level} level detected: {log_msg}"
@@ -109,35 +88,51 @@ class LogProcessor(DataProcessor):
 
 def stream_processor():
     print("=== CODE NEXUS - DATA PROCESSOR FOUNDATION ===\n")
+
+    print("Initializing Numeric Processor...")
     numProcessor = NumericProcessor()
     testNumData = [1, 2, 3, 4, 5]
-    print(numProcessor.process(testNumData), "\n")
+    print(f"Processing data: {testNumData}")
+    if not numProcessor.validate(testNumData):
+        print("Numeric data validation failed. Check input format.")
+    else:
+        print(numProcessor.process(testNumData), "\n")
 
+    print("Initializing Text Processor...")
     textProcessor = TextProcessor()
     testTextData = "Hello Nexus World"
-    print(textProcessor.process(testTextData), "\n")
+    print(f'Processing data: "{testTextData}"')
+    if not textProcessor.validate(testTextData):
+        print("Text data validation failed. Check input format.")
+    else:
+        print(textProcessor.process(testTextData), "\n")
 
+    print("Initializing Log Processor...")
     logProcessor = LogProcessor()
     testLogData = "ERROR: Connection timeout"
-    print(logProcessor.process(testLogData), "\n")
+    print(f'Processing data: "{testLogData}"')
+    if not logProcessor.validate(testLogData):
+        print("Log data validation failed. Check input format.")
+    else:
+        print(logProcessor.process(testLogData), "\n")
 
     print("=== Polymorphic Processing Demo ===\n")
     print("Processing multiple data through same interface...")
 
-    print("\nFoundation systems online. Nexus ready for advance streams.")
     processors: List[DataProcessor] = [
-        NumericProcessor,
-        TextProcessor,
-        LogProcessor,
+        numProcessor,
+        textProcessor,
+        logProcessor,
     ]
     dataSamples = [
-        [10, 20, 30],
-        "Nexus Polymorphism Test",
-        "WARNING: High memory usage detected",
+        [2, 2, 2],
+        "hello world!",
+        "INFO: System ready",
     ]
     for i in range(len(processors)):
-        print(f"Result {i+1}:")
-        processors[i]().process(dataSamples[i])
+        print(f"Result {i+1}: {processors[i].process(dataSamples[i])}")
+
+    print("\nFoundation systems online. Nexus ready for advance streams.")
 
 
 if __name__ == "__main__":
