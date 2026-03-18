@@ -142,16 +142,16 @@ class EventStream(DataStream):
 
 
 class StreamProcessor:
-    total_sensor_records: int
-    total_transaction_records: int
-    total_event_records: int
+    total_sensor: int
+    total_trans: int
+    total_event: int
     streams: List[DataStream]
 
     def __init__(self):
         self.streams = []
-        self.total_sensor_records = 0
-        self.total_transaction_records = 0
-        self.total_event_records = 0
+        self.total_sensor = 0
+        self.total_trans = 0
+        self.total_event = 0
 
     def add_stream(self, stream: DataStream, data_type: str):
         print(f"Stream ID: {stream.stream_id} type: {data_type}")
@@ -166,25 +166,19 @@ class StreamProcessor:
                     stream.process_batch(results)
                     match stream:
                         case SensorStream():
-                            self.total_sensor_records += (
-                                stream.number_of_records
-                            )
+                            self.total_sensor += stream.number_of_records
                         case TransactionStream():
-                            self.total_transaction_records += (
-                                stream.number_of_records
-                            )
+                            self.total_trans += stream.number_of_records
                         case EventStream():
-                            self.total_event_records += (
-                                stream.number_of_records
-                            )
+                            self.total_event += stream.number_of_records
             except Exception:
                 continue
 
         print(
             "Batch 1 Results:",
-            f"- Sensor data: {self.total_sensor_records} readings processed,",
-            f"- Transaction data: {self.total_transaction_records} operations processed,",
-            f"- Event data: {self.total_event_records} events processed",
+            f"- Sensor data: {self.total_sensor} readings processed,",
+            f"- Transaction data: {self.total_trans} operations processed,",
+            f"- Event data: {self.total_event} events processed",
             sep="\n",
         )
 
