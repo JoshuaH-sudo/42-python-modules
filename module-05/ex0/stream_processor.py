@@ -5,7 +5,7 @@ from abc import ABC, abstractmethod
 class DataProcessor(ABC):
     @abstractmethod
     def process(self, data: Any) -> str:
-        if isinstance(data, str):
+        if type(data) is str:
             print(f'Processing data: "{data}"')
         else:
             print(f"Processing data: {data}")
@@ -32,7 +32,7 @@ class NumericProcessor(DataProcessor):
 
     def validate(self, data: List[int]) -> bool:
         for item in data:
-            if not isinstance(item, int):
+            if type(item) is not int:
                 print(f"Validation failed: {item} is not an integer.")
                 return False
         print("Validation: Numeric data verified")
@@ -49,7 +49,7 @@ class TextProcessor(DataProcessor):
         return self.format_output(result)
 
     def validate(self, data: str) -> bool:
-        if not isinstance(data, str):
+        if type(data) is not str:
             print(f"Validation failed: {data} is not a string.")
             return False
         print("Validation: Text data verified")
@@ -68,7 +68,7 @@ class LogProcessor(DataProcessor):
         return self.format_output(result)
 
     def validate(self, data: str) -> bool:
-        if not isinstance(data, str):
+        if type(data) is not str:
             print(f"Validation failed: {data} is not a string.")
             return False
         if not any(level in data for level in self.logLevels):
