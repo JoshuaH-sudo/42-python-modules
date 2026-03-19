@@ -1,17 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import Any, Dict, List, Optional, Union
 
-# This exercise requires the use of classes with inheritance, super(),
-# try/except blocks, list comprehensions for data processing, and ABC
-# with @abstractmethod. Type hints from the typing module must be
-# used. The isinstance() function is needed for type checking.
-
-# This exercise demonstrates subtype polymorphism in action. Your
-# StreamProcessor should be able to handle any DataStream subtype
-# without knowing the specific implementation details. This is the
-# power of polymorphic design!
-# 13
-
 
 class DataStream(ABC):
     stream_id: str
@@ -269,7 +258,7 @@ class StreamProcessor:
         )
 
 
-def demo() -> None:
+def data_stream() -> None:
     print("=== CODE NEXUS - POLYMORPHIC STREAM SYSTEM ===\n")
 
     stream_processor = StreamProcessor()
@@ -328,4 +317,4 @@ def demo() -> None:
 
 
 if __name__ == "__main__":
-    demo()
+    data_stream()
