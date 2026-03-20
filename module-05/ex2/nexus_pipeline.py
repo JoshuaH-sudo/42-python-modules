@@ -1,68 +1,10 @@
-# This exercise requires the use of classes with inheritance, super(),
-# try/except blocks, list and dict comprehensions for data processing,
-# ABC with @abstractmethod, and Protocol for duck typing. The
-# collections module is authorized for advanced data structures.
-# Type hints from typing module (including Protocol) must be used
-# throughout
-
-# ProcessingStage (Protocol): Interface for stages using duck typing. Any class
-# with process() can act as a stage.
-# •ProcessingPipeline (ABC): Abstract base managing stages. Contains a list of
-# stages and orchestrates data ow.
-# •Stage Classes: InputStage, TransformStage, OutputStage implement the Pro-
-# tocol (duck typing, no inheritance). No constructor parameters.
-# •Adapter Classes: JSONAdapter, CSVAdapter, StreamAdapter inherit from ProcessingPipeline
-# and override process(). Each takes pipeline_id parameter.
-# •NexusManager: Orchestrates multiple pipelines polymorphically.
-# •Key Relationships: Composition (contains), Inheritance (inherits from), Imple-
-# mentation (implements protocol).
-# Required Implementation:
-# •Create a exible ProcessingPipeline abstract base class with congurable pro-
-# cessing stages
-# •Use Protocol or duck typing for stage interfaces (stages must have a process()
-# method)
-# •Implement specialized pipeline stages (InputStage, TransformStage, OutputStage)
-# with process() methods
-# •Build data adapters (JSONAdapter, CSVAdapter, StreamAdapter) that inherit
-# from ProcessingPipeline
-# •Each adapter should override the process() method for format-specic handling
-# •Create a NexusManager that orchestrates multiple pipelines polymorphically
-# •Demonstrate pipeline chaining where output from one pipeline feeds into another
-# •Include comprehensive error handling and recovery mechanisms
-# •Add performance monitoring and pipeline statistics
-
-# This is your masterpiece! Demonstrate how method overriding and
-# subtype polymorphism enable building complex, maintainable systems.
-# Your pipeline should handle any data type or processing requirement
-# through polymorphic interfaces.
-# 17
-
-
 from abc import ABC, abstractmethod
-from typing import Any, Protocol, Union
+from typing import Any, Protocol, Union, List, Dict
 
 
 class ProcessingStage(Protocol):
     def process(self, data: Any) -> Any:
         pass
-
-
-class InputStage:
-    def process(self, data) -> dict:
-        print(f"Input: {data}")
-        return data
-
-
-class TransformStage:
-    def process(self, data) -> dict:
-        print("Transform: Enriched with metadata and validation")
-        return data
-
-
-class OutputStage:
-    def process(self, data) -> dict:
-        print(f"Output: {data}")
-        return data
 
 
 class ProcessingPipeline(ABC):
@@ -72,33 +14,167 @@ class ProcessingPipeline(ABC):
 
 
 class JSONAdapter(ProcessingPipeline):
+    stages: List[ProcessingStage]
+
     def __init__(self, pipeline_id: str):
         self.pipeline_id = pipeline_id
+        self.stages = [
+            self.InputStage(),
+            self.TransformStage(),
+            self.OutputStage(),
+        ]
 
     def process(self, data: Any) -> Union[str, Any]:
-        print(f"Processing JSON data in pipeline {self.pipeline_id}")
-        InputStage().process(data)
-        TransformStage().process(data)
-        OutputStage().process(data)
+        for stage in self.stages:
+            try:
+                data = stage.process(data)
+            except Exception as e:
+                print(f"Error in stage {stage.__class__.__name__}: {e}")
+                return None
+        return data
+
+    class InputStage:
+        def process(self, data: Dict) -> Dict:
+            print(f"Input: {data}")
+            return data
+
+    class TransformStage:
+        def process(self, data: Dict) -> Dict:
+            print("Transform: Enriched with metadata and validation")
+            if data.get("sensor") is None or data.get("value") is None:
+                raise ValueError(
+                    "Missing required fields: 'sensor' and 'value'"
+                )
+
+            is_normal = data.get("temp", 0) < 100
+            status = "Normal Range" if is_normal else "High"
+            return {
+                "sensor": data.get("sensor"),
+                "unit": data.get("unit", "C"),
+                "value": data.get("value"),
+                "is_normal": is_normal,
+                "status": status,
+            }
+
+    class OutputStage:
+        def process(self, data: Dict) -> str:
+            if data["sensor"] == "temp":
+                return (
+                    "Output: Processed temperature reading: "
+                    f"{data['value']} {data['unit']} ({data['status']})"
+                )
 
 
 class CSVAdapter(ProcessingPipeline):
+    stages: List[ProcessingStage]
+
     def __init__(self, pipeline_id: str):
         self.pipeline_id = pipeline_id
+        self.stages = [
+            self.InputStage(),
+            self.TransformStage(),
+            self.OutputStage(),
+        ]
 
     def process(self, data: Any) -> Any:
-        print(f"Processing CSV data in pipeline {self.pipeline_id}")
-        return super().process(data)
+        for stage in self.stages:
+            try:
+                data = stage.process(data)
+            except Exception as e:
+                print(f"Error in stage {stage.__class__.__name__}: {e}")
+                return None
+        return data
+
+    class InputStage:
+        def process(self, data: str) -> str:
+            print('Input: "user,action,timestamp"')
+            return data
+
+    class TransformStage:
+        def process(self, data: str) -> Dict:
+            print("Transform: Parsed CSV event row and validated fields")
+            fields = [field.strip() for field in data.split(",")]
+            if len(fields) != 3:
+                raise ValueError(
+                    "CSV data must contain user, action, and timestamp"
+                )
+
+            user, action, timestamp = fields
+            return {
+                "user": user,
+                "action": action,
+                "timestamp": timestamp,
+                "actions_processed": 1,
+            }
+
+    class OutputStage:
+        def process(self, data: Dict) -> str:
+            return (
+                f"Output: {data['user']} activity logged: "
+                f"{data['actions_processed']} actions processed"
+            )
 
 
 class StreamAdapter(ProcessingPipeline):
+    stages: List[ProcessingStage]
+
     def __init__(self, pipeline_id: str):
         self.pipeline_id = pipeline_id
+        self.stages = [
+            self.InputStage(),
+            self.TransformStage(),
+            self.OutputStage(),
+        ]
         print("Pipeline capacity: 1000 streams/second\n")
 
     def process(self, data: Any) -> Any:
-        print(f"Processing Stream data in pipeline {self.pipeline_id}")
-        return super().process(data)
+        for stage in self.stages:
+            try:
+                data = stage.process(data)
+            except Exception as e:
+                print(f"Error in stage {stage.__class__.__name__}: {e}")
+                return None
+        return data
+
+    class InputStage:
+        def process(self, data: List[Dict]) -> List[Dict]:
+            print("Input: Real-time sensor stream")
+            return data
+
+    class TransformStage:
+        def process(self, data: List[Dict]) -> Dict:
+            print("Transform: Aggregated and filtered")
+            if not data:
+                raise ValueError(
+                    "Stream data must include at least one reading"
+                )
+
+            valid_temps = [
+                reading["value"]
+                for reading in data
+                if reading.get("sensor") == "temp"
+                and reading.get("value") is not None
+            ]
+
+            if not valid_temps:
+                raise ValueError(
+                    "No valid temperature readings found in stream"
+                )
+
+            average_temp = sum(valid_temps) / len(valid_temps)
+            return {
+                "reading_count": len(valid_temps),
+                "average_temp": average_temp,
+                "unit": "C",
+            }
+
+    class OutputStage:
+        def process(self, data: Dict) -> str:
+            return (
+                "Output: Stream summary: "
+                f"{data['reading_count']} readings, "
+                f"avg: {data['average_temp']:.1f}°{data['unit']}"
+            )
 
 
 class NexusManager:
@@ -108,10 +184,14 @@ class NexusManager:
     def add_pipeline(self, pipeline_id: str, pipeline: ProcessingPipeline):
         self.pipelines[pipeline_id] = pipeline
 
-    def process_data(self, pipeline_id: str, data: Any) -> Any:
-        if pipeline_id not in self.pipelines:
-            raise ValueError(f"Pipeline {pipeline_id} not found.")
-        return self.pipelines[pipeline_id].process(data)
+    def process_data(self, pipeline_id: str, data: Any) -> any:
+        try:
+            if pipeline_id not in self.pipelines:
+                raise ValueError(f"Pipeline {pipeline_id} not found.")
+            return self.pipelines[pipeline_id].process(data)
+        except Exception as e:
+            print(f"Error processing data in pipeline {pipeline_id}: {e}")
+            return None
 
 
 def nexus_pipeline():
@@ -137,8 +217,22 @@ def nexus_pipeline():
     print("\n=== Multi-Format Data Processing ===\n")
 
     print("Processing JSON data through pipeline...")
-    json_data = {"name": "Nexus", "type": "Pipeline", "version": 1.0}
-    manager.process_data("json", json_data)
+    json_data = {"sensor": "temp", "value": 23.5, "unit": "C"}
+    print(manager.process_data("json", json_data))
+
+    print("\nProcessing CSV data through same pipeline...")
+    csv_data = "joshua,login,2026-03-20T14:30:00Z"
+    print(manager.process_data("csv", csv_data))
+
+    print("\nProcessing stream data through same pipeline...")
+    stream_data = [
+        {"sensor": "temp", "value": 21.8, "unit": "C"},
+        {"sensor": "temp", "value": 22.0, "unit": "C"},
+        {"sensor": "temp", "value": 22.4, "unit": "C"},
+        {"sensor": "temp", "value": 21.9, "unit": "C"},
+        {"sensor": "temp", "value": 22.4, "unit": "C"},
+    ]
+    print(manager.process_data("stream", stream_data))
 
 
 if __name__ == "__main__":
