@@ -1,105 +1,62 @@
-class Achievement:
-    def __init__(self, name: str, is_rare: bool = False) -> None:
-        self.name = name
-        self.is_rare = is_rare
+import random
+
+ACHIEVEMENTS = [
+    "Boss Slayer",
+    "Collector Supreme",
+    "Crafting Genius",
+    "First Steps",
+    "Hidden Path Finder",
+    "Master Explorer",
+    "Sharp Mind",
+    "Speed Runner",
+    "Strategist",
+    "Survivor",
+    "Treasure Hunter",
+    "Untouchable",
+    "Unstoppable",
+    "World Savior",
+]
 
 
-allowed_achievements = {
-    Achievement("boss_slayer"),
-    Achievement("first_kill"),
-    Achievement("level_10"),
-    Achievement("speed_demon"),
-    Achievement("treasure_hunter"),
-}
-
-rare_achievements = {
-    Achievement("collector", True),
-    Achievement("perfectionist", True),
-}
-
-all_achievements = allowed_achievements.union(rare_achievements)
-
-
-class Player:
-    def __init__(self, name: str, achievements: list[str]) -> None:
-        self.name = name
-        for achievement in achievements:
-            if achievement not in [a.name for a in all_achievements]:
-                raise ValueError(f"Invalid achievement: {achievement}")
-        self.achievements = set(achievements)
-
-    def display_info(self) -> None:
-        print(f"Player: {self.name} achievements: {self.achievements}")
-
-
-class AchievementAnalyzer:
-    players: list[Player]
-
-    def __init__(self, players: list[Player]) -> None:
-        self.players = players
-
-    @staticmethod
-    def common_achievements(player1: Player, player2: Player) -> set[str]:
-        return player1.achievements.intersection(player2.achievements)
-
-    def common_achievements_all(self) -> set[str]:
-        common = self.players[0].achievements
-        for player in self.players[1:]:
-            common = common.intersection(player.achievements)
-        return common
-
-    def players_with_rare_achievements(self) -> list[str]:
-        rare_achievements_names = {a.name for a in rare_achievements}
-        players_with_rare = []
-        for player in self.players:
-            if player.achievements.intersection(rare_achievements_names):
-                players_with_rare.append(player.name)
-        return players_with_rare
+def gen_player_achievements() -> set:
+    count = random.randint(4, 9)
+    return set(random.sample(ACHIEVEMENTS, count))
 
 
 def ft_achievement_tracker() -> None:
     print("=== Achievement Tracker System ===\n")
 
-    alice = Player(
-        "Alice", {"first_kill", "level_10", "treasure_hunter", "speed_demon"}
-    )
-    bob = Player("Bob", {"first_kill", "level_10", "boss_slayer", "collector"})
-    charlie = Player(
-        "Charlie",
-        {
-            "level_10",
-            "treasure_hunter",
-            "boss_slayer",
-            "speed_demon",
-            "perfectionist",
-        },
-    )
-    players = [alice, bob, charlie]
-    for player in players:
-        player.display_info()
+    players = {
+        "Alice": gen_player_achievements(),
+        "Bob": gen_player_achievements(),
+        "Charlie": gen_player_achievements(),
+        "Dylan": gen_player_achievements(),
+    }
 
-    print("\n=== Achievement Analytics ===")
-    analyzer = AchievementAnalyzer(players)
+    for name, achievements in players.items():
+        print(f"Player {name}: {achievements}")
+    print("")
 
-    common = analyzer.common_achievements_all()
-    achievement_names = {a.name for a in allowed_achievements}
-    rare_achievements_names = {a.name for a in rare_achievements}
-    players_with_rare = analyzer.players_with_rare_achievements()
+    all_achievements = set(ACHIEVEMENTS)
+    player_sets = list(players.values())
 
-    print(f"All unique achievements: {achievement_names}")
-    print(f"Total unique achievements: {len(allowed_achievements)}")
-    print()
+    distinct = player_sets[0].union(*player_sets[1:])
+    print(f"All distinct achievements: {distinct}\n")
 
-    print(f"Common to all players: {common}")
-    print(
-        f"Rare achievements: ({len(players_with_rare)} player)",
-        f"{rare_achievements_names}",
-    )
-    print()
+    common = player_sets[0]
+    for achievements in player_sets[1:]:
+        common = common.intersection(achievements)
+    print(f"Common achievements: {common}\n")
 
-    print("Alice vs Bob common:", analyzer.common_achievements(alice, bob))
-    print("Alice unique:", alice.achievements.difference(bob.achievements))
-    print("Bob unique:", bob.achievements - alice.achievements)
+    for name, achievements in players.items():
+        others = set().union(*(ach for n, ach in players.items() if n != name))
+        unique = achievements.difference(others)
+        print(f"Only {name} has: {unique}")
+    print("")
+
+    for name, achievements in players.items():
+        missing = all_achievements.difference(achievements)
+        print(f"{name} is missing: {missing}")
 
 
 if __name__ == "__main__":
