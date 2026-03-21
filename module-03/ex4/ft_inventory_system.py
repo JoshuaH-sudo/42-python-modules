@@ -54,7 +54,6 @@ def ft_inventory_system() -> None:
 
     inventory.update({"magic_item": 1})
     print(f"Updated inventory: {inventory}")
-    print("At the beginning of the game, your inventory is usually empty ;)")
 
 
 if __name__ == "__main__":
