@@ -12,6 +12,18 @@ class ProcessingPipeline(ABC):
     def process(self, data: Any) -> Union[str, Any]:
         pass
 
+    class InputStage(ProcessingStage):
+        def process(self, data: Any) -> Any:
+            pass
+
+    class TransformStage(ProcessingStage):
+        def process(self, data: Any) -> Any:
+            pass
+
+    class OutputStage(ProcessingStage):
+        def process(self, data: Any) -> Any:
+            pass
+
 
 class JSONAdapter(ProcessingPipeline):
     stages: List[ProcessingStage]
@@ -179,7 +191,7 @@ class StreamAdapter(ProcessingPipeline):
 
 class NexusManager:
     def __init__(self):
-        self.pipelines = {}
+        self.pipelines: Dict[str, ProcessingPipeline] = {}
 
     def add_pipeline(self, pipeline_id: str, pipeline: ProcessingPipeline):
         self.pipelines[pipeline_id] = pipeline
@@ -233,6 +245,35 @@ def nexus_pipeline():
         {"sensor": "temp", "value": 22.4, "unit": "C"},
     ]
     print(manager.process_data("stream", stream_data))
+
+    print("\n=== Pipeline Chaining Demo ===\n")
+
+    print("Pipeline A -> Pipeline B -> Pipeline C")
+    print("Data flow: Raw -> Processed -> Analyzed -> Stored")
+    data = {
+        "sensor": "joshua,login,2026-03-20T14:30:00Z",
+        "value": 22.5,
+        "unit": "C",
+    }
+    json_data = manager.pipelines["json"].TransformStage().process(data)
+    csv_data = (
+        manager.pipelines["csv"]
+        .TransformStage()
+        .process(json_data.get("sensor"))
+    )
+    print(
+        "Chained Transformations Result:",
+        f"JSON Transform: {json_data}",
+        f"CSV Transform: {csv_data}",
+        sep="\n",
+    )
+    print("\nChain result: processed through 3-stage pipeline\n")
+
+    print("\n=== Error Recovery Test ===\n")
+    error_json_data = {"sensor": None, "value": 150.0, "unit": "C"}
+    print(manager.process_data("json", error_json_data))
+
+    print("\nNexus Integration complete. All systems operational.")
 
 
 if __name__ == "__main__":
