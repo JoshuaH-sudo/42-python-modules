@@ -24,7 +24,8 @@ def ft_inventory_system() -> None:
     print("=== Inventory System Analysis ===")
     if len(sys.argv) < 2:
         print(
-            "Usage: ft_inventory_system.py <item_name>:<quantity> <item_name>:<quantity> ..."
+            "Usage: ft_inventory_system.py"
+            "<item_name>:<quantity> <item_name>:<quantity> ..."
         )
         return
     inventory = parse_inventory(sys.argv[1:])
@@ -51,10 +52,12 @@ def ft_inventory_system() -> None:
             least_abundant = item
 
     print(
-        f"Item most abundant: {most_abundant} with quantity {inventory[most_abundant]}"
+        f"Item most abundant: {most_abundant}",
+        f"with quantity {inventory[most_abundant]}",
     )
     print(
-        f"Item least abundant: {least_abundant} with quantity {inventory[least_abundant]}"
+        f"Item least abundant: {least_abundant}",
+        f"with quantity {inventory[least_abundant]}",
     )
 
     inventory.update({"magic_item": 1})
