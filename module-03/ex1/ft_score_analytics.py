@@ -2,11 +2,10 @@ import sys
 
 
 def ft_score_analytics() -> None:
-    print("=== Score Analytics ===")
+    print("=== Player Score Analytics ===")
     if len(sys.argv) < 2:
         print(
-            "No scores provided.",
-            "Usage: python3 ft_score_analytics.py <score1> <score2> ...",
+            "No scores provided. Usage: python3 ft_score_analytics.py <score1> <score2> ..."
         )
         return
 
@@ -21,8 +20,7 @@ def ft_score_analytics() -> None:
 
     if len(scores) == 0:
         print(
-            "No scores provided.",
-            "Usage: python3 ft_score_analytics.py <score1> <score2> ...",
+            "No scores provided. Usage: python3 ft_score_analytics.py <score1> <score2> ..."
         )
         return
 
@@ -37,8 +35,8 @@ def ft_score_analytics() -> None:
     print(f"Total players: {total_players}")
     print(f"Total score: {total_score}")
     print(f"Average score: {average_score}")
-    print(f"Maximum score: {max_score}")
-    print(f"Minimum score: {min_score}")
+    print(f"High score: {max_score}")
+    print(f"Low score: {min_score}")
     print(f"Score range: {score_range}")
 
 
