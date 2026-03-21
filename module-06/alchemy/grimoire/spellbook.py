@@ -1,5 +1,7 @@
+from .validator import validate_ingredients
+
+
 def record_spell(spell_name: str, ingredients: str) -> str:
-    from .validator import validate_ingredients
 
     validation_result = validate_ingredients(ingredients)
     if validation_result.endswith(" - VALID"):
