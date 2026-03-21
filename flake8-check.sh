@@ -1,1 +1,0 @@
-/Users/joshuahoban/personal/42-python-module-00/.venv/bin/python -m flake8 module-*/**/*.py

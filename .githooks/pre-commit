@@ -1,0 +1,26 @@
+#!/bin/sh
+
+set -eu
+
+repo_root=$(git rev-parse --show-toplevel)
+cd "$repo_root"
+
+python_files=$(git diff --cached --name-only --diff-filter=ACMR -- '*.py')
+
+if [ -z "$python_files" ]; then
+    exit 0
+fi
+
+printf '%s\n' 'Running flake8 on staged Python files...'
+
+set --
+
+while IFS= read -r file; do
+    if [ -n "$file" ]; then
+        set -- "$@" "$file"
+    fi
+done <<EOF
+$python_files
+EOF
+
+"$repo_root/.githooks/run-flake8.sh" "$@"

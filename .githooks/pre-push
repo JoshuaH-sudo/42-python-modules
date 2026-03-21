@@ -1,0 +1,46 @@
+#!/bin/sh
+
+set -eu
+
+repo_root=$(git rev-parse --show-toplevel)
+cd "$repo_root"
+
+tmp_file=$(mktemp)
+sorted_file=$(mktemp)
+trap 'rm -f "$tmp_file" "$sorted_file"' EXIT HUP INT TERM
+
+zero_oid=0000000000000000000000000000000000000000
+
+while read -r local_ref local_oid remote_ref remote_oid; do
+    if [ "$local_oid" = "$zero_oid" ]; then
+        continue
+    fi
+
+    if [ "$remote_oid" = "$zero_oid" ]; then
+        commit_list=$(git rev-list "$local_oid" --not --all)
+        if [ -n "$commit_list" ]; then
+            git diff-tree --no-commit-id --name-only -r $commit_list -- '*.py' >> "$tmp_file"
+        fi
+        continue
+    fi
+
+    git diff --name-only "$remote_oid" "$local_oid" -- '*.py' >> "$tmp_file"
+done
+
+if [ ! -s "$tmp_file" ]; then
+    exit 0
+fi
+
+sort -u "$tmp_file" > "$sorted_file"
+
+printf '%s\n' 'Running flake8 on Python files included in this push...'
+
+set --
+
+while IFS= read -r file; do
+    if [ -n "$file" ]; then
+        set -- "$@" "$file"
+    fi
+done < "$sorted_file"
+
+"$repo_root/.githooks/run-flake8.sh" "$@"
