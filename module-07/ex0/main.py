@@ -10,6 +10,7 @@ def main():
 
     print("CreateCard Info:")
     print(dragon_card.get_card_info())
+    print("")
 
     print(f"Playing {dragon_card.name} with 6 mana available:")
     print(f"Playable: {dragon_card.is_playable(6)}")
