@@ -22,6 +22,11 @@ def parse_inventory(args: list[str]) -> dict[str, int]:
 
 def ft_inventory_system() -> None:
     print("=== Inventory System Analysis ===")
+    if len(sys.argv) < 2:
+        print(
+            "Usage: ft_inventory_system.py item1:quantity1 item2:quantity2 ..."
+        )
+        return
     inventory = parse_inventory(sys.argv[1:])
 
     print(f"Got inventory: {inventory}")
