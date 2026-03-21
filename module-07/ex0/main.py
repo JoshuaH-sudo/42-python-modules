@@ -3,7 +3,7 @@ from .CreatureCard import CreatureCard
 
 def main():
     print("\n=== DataDeck Card Foundation ===\n")
-    print("Testing AbstractBase Class Design:\n")
+    print("Testing Abstract Base Class Design:\n")
 
     goblin_card = CreatureCard("Goblin Warrior", 2, "Common", 3, 2)
     dragon_card = CreatureCard("Fire Dragon", 5, "Legendary", 7, 5)
