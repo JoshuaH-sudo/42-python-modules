@@ -1,92 +1,50 @@
-# import time
+import random
 import typing
 
 
-events = ["level_up", "found_treasure", "killed_monster"]
-players = ["Alice", "Bob", "Charlie"]
+PLAYERS = ["alice", "bob", "charlie", "dylan"]
+ACTIONS = [
+    "move",
+    "grab",
+    "release",
+    "eat",
+    "sleep",
+    "climb",
+    "run",
+    "swim",
+    "use",
+]
 
 
-class DataProcessor:
-    event_processed = 0
-    high_level_players = 0
-    treasure_events = 0
-    level_up_events = 0
-
-    def process_data(
-        self,
-        data_stream: typing.Generator[typing.Tuple[str, str, int], None, None],
-    ) -> None:
-        for event, player, level in data_stream:
-            self.event_processed += 1
-            print(
-                f"Event {self.event_processed}: Player {player}",
-                f"(level {level}) {event}",
-            )
-            if level >= 10:
-                self.high_level_players += 1
-            if event == "found_treasure":
-                self.treasure_events += 1
-            if event == "level_up":
-                self.level_up_events += 1
+def gen_event() -> typing.Generator[typing.Tuple[str, str], None, None]:
+    while True:
+        player = random.choice(PLAYERS)
+        action = random.choice(ACTIONS)
+        yield (player, action)
 
 
-def event_stream(
-    n: int,
-) -> typing.Generator[typing.Tuple[str, str, int], None, None]:
-    for i in range(n):
-        event = events[i % len(events)]
-        player = players[i % len(players)]
-        level = (i // len(players)) + 1
-        yield (event, player, level)
-
-
-def fibonacci(n: int) -> typing.Generator[int, None, None]:
-    a, b = 0, 1
-    for _ in range(n):
-        yield a
-        a, b = b, a + b
-
-
-def primes(n: int) -> typing.Generator[int, None, None]:
-    count = 0
-    num = 2
-    while count < n:
-        is_prime = True
-        for divisor in range(2, int(num**0.5) + 1):
-            if num % divisor == 0:
-                is_prime = False
-                break
-        if is_prime:
-            yield num
-            count += 1
-        num += 1
+def consume_event(
+    events: list[typing.Tuple[str, str]],
+) -> typing.Generator[typing.Tuple[str, str], None, None]:
+    while len(events) > 0:
+        index = random.randrange(len(events))
+        yield events.pop(index)
 
 
 def ft_data_stream() -> None:
-    print("=== Game Data Stream Processor ===\n")
-    processor = DataProcessor()
-    data_stream = event_stream(1000)
+    stream = gen_event()
+    for index in range(1000):
+        player, action = next(stream)
+        print(f"Event {index + 1}: Player {player} did action {action}")
 
-    # start_time = time.perf_counter()
-    processor.process_data(data_stream)
-    # end_time = time.perf_counter()
+    ten_events: list[typing.Tuple[str, str]] = list()
+    for _ in range(10):
+        ten_events.append(next(stream))
+    print(f"Built list of 10 events: {ten_events}")
 
-    print("\n=== Stream Analytics ===")
-    print(f"Total events processed: {processor.event_processed}")
-    print(f"High-level players: {processor.high_level_players}")
-    print(f"Treasure events: {processor.treasure_events}")
-    print(f"Level up events: {processor.level_up_events}")
-    # print(f"Processing time: {end_time - start_time:.3f} seconds")
-
-    print("\n=== Generator Demonstration ===")
-    fib_stream = fibonacci(10)
-    fib_values = [str(next(fib_stream)) for _ in range(10)]
-    separator = ", "
-    print("Fibonacci sequence (first 10):", f"{separator.join(fib_values)}")
-
-    prime_stream = primes(5)
-    prime_values = [str(next(prime_stream)) for _ in range(5)]
-    print("Prime numbers (first 5):", f"{separator.join(prime_values)}")
+    for event in consume_event(ten_events):
+        print(f"Got event from list: {event}")
+        print(f"Remains in list: {ten_events}")
 
 
 if __name__ == "__main__":
