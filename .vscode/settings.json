@@ -1,4 +1,6 @@
 {
+    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+
     // Enable linting on save and set the provider
     "editor.codeActionsOnSave": {
         "source.fixAll.flake8": "explicit"
@@ -7,8 +9,9 @@
     "python.linting.flake8.enabled": true,
     "python.linting.lintOnSave": true,
 
-    // Use Flake8 installed in the current environment
-    "flake8.importStrategy": "fromEnvironment",
+    // Run the Flake8 server with the workspace virtualenv and bundled toolchain.
+    "flake8.interpreter": ["${workspaceFolder}/.venv/bin/python"],
+    "flake8.importStrategy": "useBundled",
 
     // Optional: Pass arguments to Flake8 for customization
     "flake8.args": [
