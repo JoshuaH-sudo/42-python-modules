@@ -12,14 +12,25 @@ class CreatureCard(Card):
         self.health = health
 
     def play(self, game_state: dict) -> dict:
-        print(
-            f"Playing creature card: {self.name} with {self.attack} attack",
-            f"and {self.health} health.",
-        )
-        return game_state
+        return {
+            "card_played": self.name,
+            "mana_used": self.cost,
+            "effect": "Creature summoned to battlefield",
+        }
+
+    def get_card_info(self) -> dict:
+        return {
+            "name": self.name,
+            "cost": self.cost,
+            "rarity": self.rarity,
+            "attack": self.attack,
+            "health": self.health,
+        }
 
     def attack_target(self, target):
-        print(f"{self.name} attacks {target.name} for {self.attack} damage.")
-        target.health -= self.attack
-        if target.health <= 0:
-            print(f"{target.name} has been defeated.")
+        return {
+            "attacker": self.name,
+            "target": target.name,
+            "damage_dealt": self.attack,
+            "combat_resolved": True,
+        }
