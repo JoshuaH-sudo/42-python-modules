@@ -11,9 +11,18 @@ def calculate_distance(
 
 def parse_coordinates(coord_str: str) -> tuple[float, float, float] | None:
     try:
-        x_str, y_str, z_str = coord_str.split(",")
-        return float(x_str.strip()), float(y_str.strip()), float(z_str.strip())
+        x_str, y_str, z_str = (
+            coord_str.strip().strip("'").strip('"').split(",")
+        )
+    except ValueError:
+        print("Invalid syntax")
+        return None
+    try:
+        for coord in (x_str, y_str, z_str):
+            float(coord)
+        return float(x_str), float(y_str), float(z_str)
     except ValueError as e:
+        print(f"Error on parameter: '{coord}': {e}")
         return None
 
 
@@ -28,37 +37,28 @@ def ft_coordinate_system() -> None:
         player_position = parse_coordinates(player_position_str)
         if player_position is not None:
             break
-        print("Invalid syntax")
+    print(f"Get a first tuple: {player_position}")
+    print(
+        f"It includes: X={player_position[0]},"
+        f" Y={player_position[1]},"
+        f" Z={player_position[2]}"
+    )
     distance_from_origin = calculate_distance((0, 0, 0), player_position)
-    print(
-        "Distance between (0, 0, 0) and",
-        f"{player_position}: {distance_from_origin:.2f}",
-    )
-    print("")
+    print(f"Distance to center: {distance_from_origin:.4f}\n")
 
-    coordinates_str = "3,4,0"
-    print(f'Parsing coordinates: "{coordinates_str}"')
+    print("Get a second set of coordinates")
+    while True:
+        coordinates_str = input(
+            "Enter new coordinates as floats in format 'x,y,z': "
+        )
+        coordinates = parse_coordinates(coordinates_str)
+        if coordinates is not None:
+            break
     coordinates = parse_coordinates(coordinates_str)
-    print(f"Parsed position: {coordinates}")
-    position_from_origin = calculate_distance((0, 0, 0), coordinates)
+    position_from_origin = calculate_distance(player_position, coordinates)
     print(
-        "Distance between (0, 0, 0) and",
-        f"{coordinates}: {position_from_origin:.1f}",
+        f"Distance between 2 sets of coordinates: {position_from_origin:.4f}",
     )
-    print("")
-
-    invalid_coordinates_str = "abc,def,ghi"
-    print(f'Parsing invalid coordinates: "{invalid_coordinates_str}"')
-    try:
-        parse_coordinates(invalid_coordinates_str)
-    except Exception as e:
-        print(f"Error details - Type: {e.__class__.__name__}, Args: {e.args}")
-    print("")
-
-    print("Unpacking demonstration:")
-    x, y, z = coordinates
-    print(f"Player at x={x}, y={y}, z={z}")
-    print(f"Coordinates: X={x}, Y={y}, Z={z}")
 
 
 if __name__ == "__main__":
