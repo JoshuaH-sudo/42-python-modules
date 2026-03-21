@@ -49,7 +49,10 @@ def ft_achievement_tracker() -> None:
     print(f"Common achievements: {common}\n")
 
     for name, achievements in players.items():
-        others = set().union(*(ach for n, ach in players.items() if n != name))
+        others = set()
+        for other_name, other_achievements in players.items():
+            if other_name != name:
+                others = others.union(other_achievements)
         unique = achievements.difference(others)
         print(f"Only {name} has: {unique}")
     print("")
