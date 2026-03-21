@@ -9,20 +9,26 @@ def calculate_distance(
     return math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2 + (z2 - z1) ** 2)
 
 
-def parse_coordinates(coord_str: str) -> tuple[int, int, int]:
+def parse_coordinates(coord_str: str) -> tuple[float, float, float] | None:
     try:
         x_str, y_str, z_str = coord_str.split(",")
-        return int(x_str), int(y_str), int(z_str)
+        return float(x_str.strip()), float(y_str.strip()), float(z_str.strip())
     except ValueError as e:
-        print(f"Error parsing coordinates: {e}")
-        raise e
+        return None
 
 
 def ft_coordinate_system() -> None:
     print("=== Game Coordinate System ===")
-    player_position = (10, 20, 5)
 
-    print(f"Position created: {player_position}")
+    print("Get a first set of coordinates")
+    while True:
+        player_position_str = input(
+            "Enter new coordinates as floats in format 'x,y,z': "
+        )
+        player_position = parse_coordinates(player_position_str)
+        if player_position is not None:
+            break
+        print("Invalid syntax")
     distance_from_origin = calculate_distance((0, 0, 0), player_position)
     print(
         "Distance between (0, 0, 0) and",
