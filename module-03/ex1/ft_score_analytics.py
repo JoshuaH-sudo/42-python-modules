@@ -11,10 +11,19 @@ def ft_score_analytics() -> None:
         return
 
     received_scores = sys.argv[1:]
-    try:
-        scores = [int(score) for score in received_scores]
-    except ValueError:
-        print("Error: All arguments must be valid integers")
+    scores = []
+    for score in received_scores:
+        try:
+            scores.append(int(score))
+        except ValueError:
+            print(f"Invalid parameter: '{score}'")
+            continue
+
+    if len(scores) == 0:
+        print(
+            "No scores provided.",
+            "Usage: python3 ft_score_analytics.py <score1> <score2> ...",
+        )
         return
 
     total_players = len(scores)
