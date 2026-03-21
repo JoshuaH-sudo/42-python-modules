@@ -1,3 +1,6 @@
+# from .spellbook import record_spell
+
+
 def validate_ingredients(ingredients: str) -> str:
     normalized_ingredients = ingredients.lower()
     valid_ingredients = ("fire", "water", "earth", "air")
