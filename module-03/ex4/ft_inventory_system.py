@@ -24,7 +24,7 @@ def ft_inventory_system() -> None:
     print("=== Inventory System Analysis ===")
     if len(sys.argv) < 2:
         print(
-            "Usage: ft_inventory_system.py item1:quantity1 item2:quantity2 ..."
+            "Usage: ft_inventory_system.py <item_name>:<quantity> <item_name>:<quantity> ..."
         )
         return
     inventory = parse_inventory(sys.argv[1:])
