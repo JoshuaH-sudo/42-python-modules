@@ -1,129 +1,60 @@
 import sys
 
 
-def pluralize(unit: int, singular: str, plural: str) -> str:
-    return singular if unit == 1 else plural
-
-
-class InventoryManagement:
-    inventory: dict[str, int] = dict()
-
-    def __init__(self, items: dict[str, int]) -> None:
-        self.inventory = items
-
-    def get_unique_items(self) -> set[str]:
-        return set(self.inventory.keys())
-
-    def get_total_items(self) -> int:
-        total = 0
-        for quantity in self.inventory.values():
-            total += quantity
-        return total
-
-    def print_inventory(self) -> None:
-        print("=== Current Inventory ===")
-        for item, quantity in self.inventory.items():
-            percentage = (quantity / self.get_total_items()) * 100
-            print(
-                f"{item}: {quantity}",
-                f"{pluralize(quantity, 'unit', 'units')} ({percentage:.1f}%)",
-            )
-        print()
-
-    def inventory_statistics(self) -> None:
-        most_abundant: dict[str, int] | None = None
-        least_abundant: dict[str, int] | None = None
-        for item, quantity in self.inventory.items():
-            if (
-                most_abundant is None
-                or quantity > self.inventory[most_abundant]
-            ):
-                most_abundant = item
-            if (
-                least_abundant is None
-                or quantity < self.inventory[least_abundant]
-            ):
-                least_abundant = item
-
-        print("=== Inventory Statistics ===")
-        print(
-            f"Most abundant: {most_abundant}",
-            f"({self.inventory[most_abundant]}",
-            f"{pluralize(self.inventory[most_abundant], 'unit', 'units')})",
-        )
-        print(
-            f"Least abundant: {least_abundant}",
-            f"({self.inventory[least_abundant]}",
-            f"{pluralize(self.inventory[least_abundant], 'unit', 'units')})",
-        )
-        print()
-
-    def print_categories(self) -> None:
-        moderate_items = {}
-        scarce_items = {}
-
-        # if units is greater than 5, it's moderate, otherwise it's scarce
-        for item, quantity in self.inventory.items():
-            if quantity >= 5:
-                moderate_items[item] = quantity
-            else:
-                scarce_items[item] = quantity
-
-        print("=== Item Categories ===")
-        print(f"Moderate Items: {moderate_items}")
-        print(f"Scarce Items: {scarce_items}")
-        print()
-
-    def management_suggestions(self) -> None:
-        # if units equals to 1, suggest to restock
-        restock_suggestions = []
-        for item, quantity in self.inventory.items():
-            if quantity == 1:
-                restock_suggestions.append(item)
-        print("=== Management Suggestions ===")
-        print(f"Restock needed: {restock_suggestions}")
-        print()
-
-
-def parse_arguments(args: list[str]) -> dict[str, int]:
+def parse_inventory(args: list[str]) -> dict[str, int]:
     inventory = {}
     for arg in args:
+        if ":" not in arg:
+            print(f"Error - invalid parameter '{arg}'")
+            continue
+        item, quantity_str = arg.split(":", 1)
+        if item in inventory:
+            print(f"Redundant item '{item}' - discarding")
+            continue
         try:
-            item, quantity_str = arg.split(":")
             quantity = int(quantity_str)
-            inventory[item] = quantity
         except ValueError as e:
-            print(f"Error parsing argument (SKIPPING) '{arg}': {e}")
+            print(f"Quantity error for '{item}': {e}")
+            continue
+        inventory[item] = quantity
     return inventory
 
 
 def ft_inventory_system() -> None:
-    # inventory_data = {
-    #     "potion": 5,
-    #     "armor": 3,
-    #     "shield": 2,
-    #     "sword": 1,
-    #     "helmet": 1,
-    # }
-    inventory_data = parse_arguments(sys.argv[1:])
-    inventoryManagement = InventoryManagement(inventory_data)
     print("=== Inventory System Analysis ===")
-    print(f"Total items in inventory: {inventoryManagement.get_total_items()}")
-    print(f"Unique items types: {inventoryManagement.get_unique_items()}")
-    print()
+    inventory = parse_inventory(sys.argv[1:])
 
-    inventoryManagement.print_inventory()
-    inventoryManagement.inventory_statistics()
-    inventoryManagement.print_categories()
-    inventoryManagement.management_suggestions()
+    print(f"Got inventory: {inventory}")
+    print(f"Item list: {list(inventory.keys())}")
 
-    print("=== Dictionary Properties Demo ===")
-    print(f"Dictionary keys: {inventoryManagement.inventory.keys()}")
-    print(f"Dictionary values: {inventoryManagement.inventory.values()}")
+    total = sum(inventory.values())
+    print(f"Total quantity of the {len(inventory)} items: {total}")
+
+    for item in inventory.keys():
+        percentage = round(inventory[item] / total * 100, 1)
+        print(f"Item {item} represents {percentage}%")
+
+    most_abundant = None
+    least_abundant = None
+    for item in inventory.keys():
+        if most_abundant is None or inventory[item] > inventory[most_abundant]:
+            most_abundant = item
+        if (
+            least_abundant is None
+            or inventory[item] < inventory[least_abundant]
+        ):
+            least_abundant = item
+
     print(
-        "Sample lookup - 'sword' in inventory:",
-        f"{'sword' in inventoryManagement.inventory}",
+        f"Item most abundant: {most_abundant} with quantity {inventory[most_abundant]}"
     )
+    print(
+        f"Item least abundant: {least_abundant} with quantity {inventory[least_abundant]}"
+    )
+
+    inventory.update({"magic_item": 1})
+    print(f"Updated inventory: {inventory}")
+    print("At the beginning of the game, your inventory is usually empty ;)")
 
 
 if __name__ == "__main__":
