@@ -1,35 +1,22 @@
-def healing_potion():
-	from .elements import create_fire, create_water
+from .elements import create_fire, create_water, create_earth, create_air
 
-	fire_result = create_fire()
-	water_result = create_water()
-	return f"Healing potion brewed with {fire_result} and {water_result}"
+
+def healing_potion():
+    return f"Healing potion brewed with {create_fire()} and {create_water()}"
 
 
 def strength_potion():
-	from .elements import create_earth, create_fire
-
-	earth_result = create_earth()
-	fire_result = create_fire()
-	return f"Strength potion brewed with {earth_result} and {fire_result}"
+    return f"Strength potion brewed with {create_earth()} and {create_fire()}"
 
 
 def invisibility_potion():
-	from .elements import create_air, create_water
-
-	air_result = create_air()
-	water_result = create_water()
-	return f"Invisibility potion brewed with {air_result} and {water_result}"
+    return (
+        f"Invisibility potion brewed with {create_air()} and {create_water()}"
+    )
 
 
 def wisdom_potion():
-	from .elements import create_fire, create_water, create_earth, create_air
-
-	fire_result = create_fire()
-	water_result = create_water()
-	earth_result = create_earth()
-	air_result = create_air()
-	all_four_results = (
-		f"{fire_result}, {water_result}, {earth_result}, {air_result}"
-	)
-	return f"Wisdom potion brewed with all elements: {all_four_results}"
+    all_four_results = (
+        f"{create_fire()}, {create_water()}, {create_earth()}, {create_air()}"
+    )
+    return f"Wisdom potion brewed with all elements: {all_four_results}"
