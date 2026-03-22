@@ -6,6 +6,7 @@ from .Deck import Deck
 
 def main():
     print("\n=== DataDeck Deck Builder ===\n")
+    game_state = {"available_mana": 20}
 
     print("Building deck with different card types...")
     deck = Deck()
@@ -22,7 +23,7 @@ def main():
 
     card = deck.draw_card()
     print(f"Draw: {card.name} ({card.type.capitalize()})")
-    print(f"Play: {card.play({})}")
+    print(f"Play: {card.play(game_state)}\n")
 
 
 if __name__ == "__main__":

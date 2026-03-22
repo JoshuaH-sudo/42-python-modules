@@ -5,6 +5,7 @@ def main():
     print("\n=== DataDeck Card Foundation ===\n")
     print("Testing Abstract Base Class Design:\n")
 
+    game_state = {"available_mana": 6}
     goblin_card = CreatureCard("Goblin Warrior", 2, "Common", 3, 2)
     dragon_card = CreatureCard("Fire Dragon", 5, "Legendary", 7, 5)
 
@@ -14,7 +15,7 @@ def main():
 
     print(f"Playing {dragon_card.name} with 6 mana available:")
     print(f"Playable: {dragon_card.is_playable(6)}")
-    print(f"Play result: {dragon_card.play({})}")
+    print(f"Play result: {dragon_card.play(game_state)}")
     print("")
 
     print("Fire Dragon attacks Goblin Warrior:")
