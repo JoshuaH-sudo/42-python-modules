@@ -24,10 +24,20 @@ class SpellCard(Card):
     def play(self, game_state) -> dict:
         if not self.is_playable(game_state["available_mana"]):
             return {"error": "Not enough mana to play this card."}
+
+        if self.effect_type == EffectType.DAMAGE.value:
+            effect = "Deal 3 damage to target"
+        elif self.effect_type == EffectType.HEAL.value:
+            effect = "Heal 3 health to target"
+        elif self.effect_type == EffectType.BUFF.value:
+            effect = "Buff target creature with +2/+2 until end of turn"
+        elif self.effect_type == EffectType.DEBUFF.value:
+            effect = "Debuff target creature with -2/-2 until end of turn"
+
         return {
             "card_played": self.name,
             "mana_used": self.cost,
-            "effect": self.effect_type,
+            "effect": effect,
         }
 
     def resolve_effect(self) -> dict:
