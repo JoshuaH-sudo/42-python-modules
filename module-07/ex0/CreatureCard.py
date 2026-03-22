@@ -2,6 +2,8 @@ from .Card import Card
 
 
 class CreatureCard(Card):
+    type = "creature"
+
     def __init__(
         self, name: str, cost: int, rarity: str, attack: int, health: int
     ):
@@ -12,6 +14,8 @@ class CreatureCard(Card):
         self.health = health
 
     def play(self, game_state: dict) -> dict:
+        if not self.is_playable(game_state["available_mana"]):
+            return {"error": "Not enough mana to play this card."}
         return {
             "card_played": self.name,
             "mana_used": self.cost,

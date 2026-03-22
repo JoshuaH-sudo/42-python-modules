@@ -15,7 +15,7 @@ class Deck:
     def add_card(self, card: Card):
         if not card.__class__.__bases__[0] == Card:
             raise TypeError("card must be an instance of Card")
-        self.cards.append(card)
+        self.cards.insert(0, card)
 
     def remove_card(self, card_name: str):
         for index, card in enumerate(self.cards):

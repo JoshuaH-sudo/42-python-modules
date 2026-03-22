@@ -2,6 +2,8 @@ from ex0.Card import Card
 
 
 class ArtifactCard(Card):
+    type = "artifact"
+
     def __init__(
         self, name: str, cost: int, rarity: str, durability: int, effect: str
     ):
@@ -10,13 +12,13 @@ class ArtifactCard(Card):
         self.effect = effect
 
     def play(self, game_state) -> dict:
+        if not self.is_playable(game_state["available_mana"]):
+            return {"error": "Not enough mana to play this card."}
         self.durability -= 1
         return {
-            "name": self.name,
-            "cost": self.cost,
-            "rarity": self.rarity,
+            "card_played": self.name,
+            "mana_used": self.cost,
             "effect": self.effect,
-            "durability": self.durability,
         }
 
     def activate_ability(self) -> dict:

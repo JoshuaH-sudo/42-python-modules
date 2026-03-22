@@ -15,8 +15,14 @@ def main():
             "Ancient Relic", 4, "Rare", 5, "Grants +2 attack to all creatures"
         )
     )
-    deck.add_card(SpellCard("Fireball", 4, "Uncommon", "damage"))
+    deck.add_card(SpellCard("Lightning Bolt", 4, "Uncommon", "damage"))
     print(f"Deck stats: {deck.get_deck_stats()}")
+
+    print("\nDrawing and playing cards:\n")
+
+    card = deck.draw_card()
+    print(f"Draw: {card.name} ({card.type.capitalize()})")
+    print(f"Play: {card.play({})}")
 
 
 if __name__ == "__main__":
