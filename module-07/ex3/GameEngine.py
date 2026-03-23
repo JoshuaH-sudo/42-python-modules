@@ -18,7 +18,6 @@ class GameEngine:
         self.deck = self.factory.create_themed_deck(30)
 
     def simulate_turn(self) -> dict:
-        self.turn_count += 1
         if self.hand.__len__() == 0:
             self.hand = (
                 self.deck["creature"][:1]
@@ -32,7 +31,8 @@ class GameEngine:
             return {
                 "current_hand": current_hand,
             }
-        battlefield = []
+        self.turn_count += 1
+        battlefield = ["Enemy Player"]
         turn_result = self.strategy.execute_turn(self.hand, battlefield)
         damage_dealt = turn_result.get("damage_dealt", 0)
         self.total_damage += damage_dealt

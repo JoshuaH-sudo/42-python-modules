@@ -16,7 +16,7 @@ def main():
 
     print("Simulating aggressive turn...")
     turn_result = game_engine.simulate_turn()
-    print(f"Hand: {turn_result}\n")
+    print(f"Hand: [{turn_result['current_hand']}]\n")
 
     print("Turn execution:")
     turn_result = game_engine.simulate_turn()

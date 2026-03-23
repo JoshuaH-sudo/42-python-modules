@@ -13,7 +13,7 @@ class AggressiveStrategy(GameStrategy):
             if card.cost <= 3 and mana_used + card.cost <= available_mana:
                 cards_played.append(card)
                 mana_used += card.cost
-        targets = self.prioritize_targets(["Enemy Player"])
+        targets = self.prioritize_targets(battlefield)
         damage_dealt = mana_used + 3
         return {
             "cards_played": [c.name for c in cards_played],
