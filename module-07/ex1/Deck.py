@@ -1,6 +1,4 @@
 import random
-from collections import Counter
-from statistics import mean
 from ex0.Card import Card
 from ex0.CreatureCard import CreatureCard
 from .ArtifactCard import ArtifactCard
@@ -18,9 +16,11 @@ class Deck:
         self.cards.insert(0, card)
 
     def remove_card(self, card_name: str):
-        for index, card in enumerate(self.cards):
+        index = 0
+        for card in self.cards:
             if card.name == card_name:
                 return self.cards.pop(index)
+            index += 1
         return None
 
     def shuffle(self):
@@ -32,7 +32,22 @@ class Deck:
         return self.cards.pop(0)
 
     def get_deck_stats(self):
-        total_cards = Counter(self.cards).total()
+        total_cards = 0
+        total_cost = 0
+        creature_cards = 0
+        spell_cards = 0
+        artifact_cards = 0
+
+        for card in self.cards:
+            total_cards += 1
+            total_cost += card.cost
+            if card.__class__ == CreatureCard:
+                creature_cards += 1
+            if card.__class__ == SpellCard:
+                spell_cards += 1
+            if card.__class__ == ArtifactCard:
+                artifact_cards += 1
+
         if total_cards == 0:
             return {
                 "total_cards": 0,
@@ -40,17 +55,7 @@ class Deck:
                 "rarity_distribution": {},
             }
 
-        average_cost = mean(card.cost for card in self.cards)
-        creature_cards = Counter(
-            [card for card in self.cards if card.__class__ == CreatureCard]
-        ).total()
-        spell_cards = Counter(
-            [card for card in self.cards if card.__class__ == SpellCard]
-        ).total()
-        artifact_cards = Counter(
-            [card for card in self.cards if card.__class__ == ArtifactCard]
-        ).total()
-
+        average_cost = total_cost / total_cards
         return {
             "total_cards": total_cards,
             "creature_cards": creature_cards,
