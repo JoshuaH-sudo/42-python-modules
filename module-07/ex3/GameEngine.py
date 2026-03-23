@@ -18,6 +18,7 @@ class GameEngine:
         self.deck = self.factory.create_themed_deck(30)
 
     def simulate_turn(self) -> dict:
+        self.turn_count += 1
         if self.hand.__len__() == 0:
             self.hand = (
                 self.deck["creature"][:1]
