@@ -30,6 +30,10 @@ class GameEngine:
             )
 
             print(f"Hand: [{current_hand}]")
+        battlefield = []
+        turn_result = self.strategy.execute_turn(self.hand, battlefield)
+        damage_dealt = turn_result.get("damage", 0)
+        self.total_damage += damage_dealt
 
     def get_engine_status(self) -> dict:
         return {
