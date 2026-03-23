@@ -56,7 +56,7 @@ class TournamentCard(Card, Combatable, Rankable):
         damage = self.attack
         return {
             "attacker": self.name,
-            "target": target.name if hasattr(target, 'name') else str(target),
+            "target": target.name if hasattr(target, "name") else str(target),
             "damage_dealt": damage,
         }
 

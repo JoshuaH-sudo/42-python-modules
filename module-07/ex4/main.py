@@ -45,7 +45,8 @@ def main():
     leaderboard = platform.get_leaderboard()
     for idx, card_info in enumerate(leaderboard, 1):
         print(
-            f"{idx}. {card_info['name']} - Rating: {card_info['rating']} ({card_info['wins']}-{card_info['losses']})"
+            f"{idx}. {card_info['name']} - Rating: {card_info['rating']} \
+                ({card_info['wins']}-{card_info['losses']})"
         )
 
     print("\nPlatform Report:")
