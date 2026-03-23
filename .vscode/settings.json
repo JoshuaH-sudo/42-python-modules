@@ -28,6 +28,7 @@
         "editor.formatOnSave": true,
         "files.insertFinalNewline": true,
         "editor.rulers": [79],
-        "editor.tabSize": 4
+        "editor.tabSize": 4,
+        "editor.insertSpaces": false
     }
 }
