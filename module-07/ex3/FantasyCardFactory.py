@@ -91,7 +91,10 @@ class FantasyCardFactory(CardFactory):
 
     def create_themed_deck(self, size: int) -> dict:
         deck = {"creature": [], "spell": [], "artifact": []}
-        for _ in range(size):
+        deck["creature"].append(self.create_creature())
+        deck["spell"].append(self.create_spell())
+        deck["artifact"].append(self.create_artifact())
+        for _ in range(size - 3):
             card_type = choice(list(self.supported_types.keys()))
             if card_type == "creature":
                 deck["creature"].append(self.create_creature())
@@ -102,4 +105,8 @@ class FantasyCardFactory(CardFactory):
         return deck
 
     def get_supported_types(self) -> dict:
-        return self.supported_types
+        return {
+            "creatures": self.supported_types["creature"],
+            "spells": self.supported_types["spell"],
+            "artifacts": self.supported_types["artifact"],
+        }

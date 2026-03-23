@@ -25,15 +25,19 @@ class GameEngine:
                 + self.deck["spell"][:1]
                 + self.deck["artifact"][:1]
             )
+            self.cards_created += len(self.hand)
             current_hand = ", ".join(
                 f"{card.name} ({card.cost})" for card in self.hand
             )
-
-            print(f"Hand: [{current_hand}]")
+            return {
+                "current_hand": current_hand,
+            }
         battlefield = []
         turn_result = self.strategy.execute_turn(self.hand, battlefield)
-        damage_dealt = turn_result.get("damage", 0)
+        damage_dealt = turn_result.get("damage_dealt", 0)
         self.total_damage += damage_dealt
+
+        return turn_result
 
     def get_engine_status(self) -> dict:
         return {
