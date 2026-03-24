@@ -8,8 +8,10 @@ class TournamentPlatform:
         self.matches_played = 0
 
     def register_card(self, card: TournamentCard) -> str:
-        card_id = f"{card.name.lower().replace(' ', '_')}_\
-            {self.registered_cards.__len__() + 1:03d}"
+        card_id = (
+            card.name.lower().replace(" ", "_")
+            + f"_{len(self.registered_cards) + 1:03d}"
+        )
         self.registered_cards.append(card)
         self.card_ids[card_id] = card
         return card_id
