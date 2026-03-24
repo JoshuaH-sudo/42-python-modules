@@ -16,7 +16,7 @@ class ContactType(str, Enum):
     TELEPATHIC = "telepathic"
 
 
-class AlienContactData(BaseModel):
+class AlienContact(BaseModel):
     contact_id: str = Field(min_length=5, max_length=15)
     timestamp: datetime
     location: str = Field(min_length=3, max_length=100)
@@ -70,7 +70,7 @@ def main() -> None:
     print("Alien Contact Log Validation")
     print("======================================")
     try:
-        contact_data = AlienContactData(**good_test_data)
+        contact_data = AlienContact(**good_test_data)
         print("Valid contact report:")
         print(
             f"ID: {contact_data.contact_id}",
@@ -97,7 +97,7 @@ def main() -> None:
     }
 
     try:
-        AlienContactData(**bad_test_data)
+        AlienContact(**bad_test_data)
     except ValidationError as e:
         print("Expected validation error:")
         for error in e.errors():
