@@ -5,13 +5,21 @@ def loading():
     try:
         import pandas as pd
 
-        print(f"[OK] {pd} ({pd.__version__} - Data manipulation ready )")
+        print(
+            f"[OK] {pd.__name__} ({pd.__version__})",
+            "- Data manipulation ready",
+        )
         import numpy as np
 
-        print(f"[OK] {np} ({np.__version__} - Numerical computing ready )")
+        print(
+            f"[OK] {np.__name__} ({np.__version__})",
+            "- Numerical computing ready",
+        )
         import matplotlib as mpl
 
-        print(f"[OK] {mpl} ({mpl.__version__} - Visualization ready )")
+        print(
+            f"[OK] {mpl.__name__} ({mpl.__version__})", "- Visualization ready"
+        )
         all_imported = True
     except ImportError as e:
         print(
