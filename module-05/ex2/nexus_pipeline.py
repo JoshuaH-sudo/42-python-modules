@@ -28,7 +28,7 @@ class ProcessingPipeline(ABC):
 class JSONAdapter(ProcessingPipeline):
     stages: List[ProcessingStage]
 
-    def __init__(self, pipeline_id: str):
+    def __init__(self, pipeline_id: str) -> None:
         self.pipeline_id = pipeline_id
         self.stages = [
             self.InputStage(),
@@ -80,7 +80,7 @@ class JSONAdapter(ProcessingPipeline):
 class CSVAdapter(ProcessingPipeline):
     stages: List[ProcessingStage]
 
-    def __init__(self, pipeline_id: str):
+    def __init__(self, pipeline_id: str) -> None:
         self.pipeline_id = pipeline_id
         self.stages = [
             self.InputStage(),
@@ -130,7 +130,7 @@ class CSVAdapter(ProcessingPipeline):
 class StreamAdapter(ProcessingPipeline):
     stages: List[ProcessingStage]
 
-    def __init__(self, pipeline_id: str):
+    def __init__(self, pipeline_id: str) -> None:
         self.pipeline_id = pipeline_id
         self.stages = [
             self.InputStage(),
@@ -190,13 +190,15 @@ class StreamAdapter(ProcessingPipeline):
 
 
 class NexusManager:
-    def __init__(self):
+    def __init__(self) -> None:
         self.pipelines: Dict[str, ProcessingPipeline] = {}
 
-    def add_pipeline(self, pipeline_id: str, pipeline: ProcessingPipeline):
+    def add_pipeline(
+        self, pipeline_id: str, pipeline: ProcessingPipeline
+    ) -> None:
         self.pipelines[pipeline_id] = pipeline
 
-    def process_data(self, pipeline_id: str, data: Any) -> any:
+    def process_data(self, pipeline_id: str, data: Any) -> Any:
         try:
             if pipeline_id not in self.pipelines:
                 raise ValueError(f"Pipeline {pipeline_id} not found.")
@@ -206,7 +208,7 @@ class NexusManager:
             return None
 
 
-def nexus_pipeline():
+def nexus_pipeline() -> None:
     print("=== CODE NEXUS - ENTERPRISE PIPELINE SYSTEM ===\n")
 
     print("Initializing Nexus Manager...")

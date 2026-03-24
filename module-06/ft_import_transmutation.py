@@ -5,7 +5,7 @@ from alchemy.elements import create_earth, create_fire
 from alchemy.potions import strength_potion
 
 
-def ft_import_transmutation():
+def ft_import_transmutation() -> None:
     print("=== Import Transmutation Mastery ===")
     print("Method 1 - Full module import:")
     print(

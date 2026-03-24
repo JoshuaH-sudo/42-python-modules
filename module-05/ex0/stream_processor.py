@@ -86,7 +86,7 @@ class LogProcessor(DataProcessor):
         return "UNKNOWN"
 
 
-def stream_processor():
+def stream_processor() -> None:
     print("=== CODE NEXUS - DATA PROCESSOR FOUNDATION ===\n")
 
     print("Initializing Numeric Processor...")

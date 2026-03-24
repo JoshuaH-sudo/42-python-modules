@@ -2,7 +2,7 @@ import alchemy
 import alchemy.elements
 
 
-def ft_sacred_scroll():
+def ft_sacred_scroll() -> None:
     print("=== Sacred Scroll Mastery ===")
     print("Testing direct module access:")
     print(f"alchemy.elements.create_fire(): {alchemy.elements.create_fire()}")

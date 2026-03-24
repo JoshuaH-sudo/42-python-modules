@@ -1,7 +1,7 @@
 from alchemy.grimoire import record_spell, validate_ingredients
 
 
-def ft_circular_curse():
+def ft_circular_curse() -> None:
     print("=== Circular Curse Breaking ===")
     print("")
 

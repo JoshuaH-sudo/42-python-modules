@@ -4,7 +4,7 @@ from alchemy.transmutation.basic import lead_to_gold, stone_to_gem
 from alchemy.transmutation.advanced import philosophers_stone, elixir_of_life
 
 
-def ft_pathway_debate():
+def ft_pathway_debate() -> None:
     print("=== Pathway Debate Mastery ===\n")
 
     print("Testing Absolute Imports (from basic.py):")
