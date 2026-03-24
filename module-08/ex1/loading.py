@@ -1,5 +1,5 @@
 def loading():
-    print("LOADING STATUS: loading programs... *\n")
+    print("LOADING STATUS: loading programs...\n")
     print("Checking dependencies:")
     all_imported = False
     try:
@@ -38,12 +38,12 @@ def loading():
     sample_matrix_data = np.random.rand(1000, 1000)
     print("Analysing Matrix data...")
     analysis_result = np.mean(sample_matrix_data, axis=0)
-    print("Porcessing 1000 data points...")
+    print("Processing 1000 data points...")
     processed_data = pd.DataFrame(analysis_result, columns=["Mean Value"])
     print("Generating visualization...")
     plt.bar(processed_data.index, processed_data["Mean Value"])
     plt.savefig("matrix_analysis.png")
-    print("\nAnalysis complete!\n")
+    print("\nAnalysis complete!")
     print("Results saved to: matrix_analysis.png")
 
 

@@ -10,3 +10,5 @@ dependencies = [
     "numpy",
     "matplotlib",
 ]
+[tool.poetry]
+package-mode = false
