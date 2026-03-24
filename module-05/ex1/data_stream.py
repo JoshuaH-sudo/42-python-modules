@@ -225,10 +225,7 @@ class StreamProcessor:
                             stream.process_batch(transaction_results)
                             self.total_trans += stream.number_of_records
                     case EventStream():
-                        event_data = [
-                            item for item in data if isinstance(item, str)
-                        ]
-                        event_results = stream.filter_data(event_data)
+                        event_results = stream.filter_data(data)
                         if event_results:
                             stream.process_batch(event_results)
                             self.total_event += stream.number_of_records
