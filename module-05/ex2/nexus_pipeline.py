@@ -7,6 +7,21 @@ class ProcessingStage(Protocol):
         pass
 
 
+class InputStage(ProcessingStage):
+    def process(self, data: Any) -> Any:
+        pass
+
+
+class TransformStage(ProcessingStage):
+    def process(self, data: Any) -> Any:
+        pass
+
+
+class OutputStage(ProcessingStage):
+    def process(self, data: Any) -> Any:
+        pass
+
+
 class ProcessingPipeline(ABC):
     @abstractmethod
     def process(self, data: Any) -> Union[str, Any]:
