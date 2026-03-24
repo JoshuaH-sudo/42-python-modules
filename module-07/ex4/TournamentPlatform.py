@@ -1,4 +1,5 @@
 from .TournamentCard import TournamentCard
+import statistics
 
 
 class TournamentPlatform:
@@ -10,7 +11,7 @@ class TournamentPlatform:
     def register_card(self, card: TournamentCard) -> str:
         card_id = (
             card.name.lower().replace(" ", "_")
-            + f"_{len(self.registered_cards) + 1:03d}"
+            + f"_{self.registered_cards.__len__() + 1:03d}"
         )
         self.registered_cards.append(card)
         self.card_ids[card_id] = card
@@ -70,16 +71,15 @@ class TournamentPlatform:
         ]
 
     def generate_tournament_report(self) -> dict:
-        total_rating = sum(
-            card.calculate_rating() for card in self.registered_cards
-        )
         avg_rating = (
-            total_rating // len(self.registered_cards)
+            statistics.mean(
+                [card.calculate_rating() for card in self.registered_cards]
+            )
             if self.registered_cards
             else 0
         )
         return {
-            "total_cards": len(self.registered_cards),
+            "total_cards": self.registered_cards.__len__(),
             "matches_played": self.matches_played,
             "avg_rating": avg_rating,
             "platform_status": (

@@ -24,7 +24,7 @@ class GameEngine:
                 + self.deck["spell"][:1]
                 + self.deck["artifact"][:1]
             )
-            self.cards_created += len(self.hand)
+            self.cards_created += self.hand.__len__()
             current_hand = ", ".join(
                 f"{card.name} ({card.cost})" for card in self.hand
             )
