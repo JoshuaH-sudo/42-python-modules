@@ -215,34 +215,12 @@ class StreamProcessor:
             try:
                 match stream:
                     case SensorStream():
-                        sensor_data = [
-                            item
-                            for item in data
-                            if isinstance(item, dict)
-                            and all(
-                                isinstance(key, str)
-                                and isinstance(value, (int, float))
-                                for key, value in item.items()
-                            )
-                        ]
-                        sensor_results = stream.filter_data(sensor_data)
+                        sensor_results = stream.filter_data(data)
                         if sensor_results:
                             stream.process_batch(sensor_results)
                             self.total_sensor += stream.number_of_records
                     case TransactionStream():
-                        transaction_data = [
-                            item
-                            for item in data
-                            if isinstance(item, dict)
-                            and all(
-                                isinstance(key, str)
-                                and isinstance(value, (int, float))
-                                for key, value in item.items()
-                            )
-                        ]
-                        transaction_results = stream.filter_data(
-                            transaction_data
-                        )
+                        transaction_results = stream.filter_data(data)
                         if transaction_results:
                             stream.process_batch(transaction_results)
                             self.total_trans += stream.number_of_records
