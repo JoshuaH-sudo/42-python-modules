@@ -33,20 +33,19 @@ def main() -> None:
         )
         return
 
-    good_test_data = {
-        "station_id": "ISS001",
-        "name": "International Space Station",
-        "crew_size": 6,
-        "power_level": 85.5,
-        "oxygen_level": 92.3,
-        "last_maintenance": datetime.now(),
-        "is_operational": True,
-    }
-
     print("Space Station Data Validation")
     print("========================================")
     try:
-        station_data = SpaceStationData(**good_test_data)
+        station_data = SpaceStationData(
+            station_id="ISS001",
+            name="International Space Station",
+            crew_size=6,
+            power_level=85.5,
+            oxygen_level=92.3,
+            last_maintenance=datetime.now(),
+            is_operational=True,
+            notes=None,
+        )
         print("Valid station created:")
         operational_status = (
             "Operational" if station_data.is_operational else "Non-Operational"
@@ -71,18 +70,17 @@ def main() -> None:
             print(error["msg"])
     print("==========================================")
 
-    invalid_test_data = {
-        "station_id": "ISS001",
-        "name": "International Space Station",
-        "crew_size": 100000,
-        "power_level": 85.5,
-        "oxygen_level": 92.3,
-        "last_maintenance": datetime.now(),
-        "is_operational": True,
-    }
-
     try:
-        SpaceStationData(**invalid_test_data)
+        SpaceStationData(
+            station_id="ISS001",
+            name="International Space Station",
+            crew_size=100000,
+            power_level=85.5,
+            oxygen_level=92.3,
+            last_maintenance=datetime.now(),
+            is_operational=True,
+            notes=None,
+        )
     except ValidationError as e:
         print("Expected validation error:")
         error_details = e.errors()
