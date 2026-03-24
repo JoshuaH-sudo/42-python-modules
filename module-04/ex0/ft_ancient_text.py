@@ -15,7 +15,7 @@ def ft_ancient_text() -> None:
         print("\n\nData recovery complete. Storage unit disconnected.")
         file.close()
     except FileNotFoundError:
-        print("File not found.")
+        print("ERROR: Storage vault not found.")
 
 
 if __name__ == "__main__":

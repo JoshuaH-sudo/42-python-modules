@@ -2,7 +2,7 @@ def ft_crisis_response() -> None:
     print("=== CYBER ARCHIVES - CRISIS RESPONSE SYSTEM ===\n")
 
     lost_file_name = "lost_archive.txt"
-    forbidden_file_name = "classified_vault.txt"
+    forbidden_file_name = "classified_data.txt"
     standard_file_name = "standard_archive.txt"
 
     # Access file that does not exist
