@@ -1,9 +1,15 @@
-from dotenv import load_dotenv
 from os import getenv
 
 
 def oracle():
     print("ORACLE STATUS: Reading the Matrix...\n")
+    try:
+        from dotenv import load_dotenv
+    except ImportError:
+        print("[ERROR] Missing dependency: python-dotenv")
+        print("Please run: pip install python-dotenv")
+        print("\nThen run this program again.")
+        exit(1)
 
     load_dotenv()
     mode = getenv("MATRIX_MODE")
