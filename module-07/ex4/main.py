@@ -2,7 +2,7 @@ from .TournamentCard import TournamentCard
 from .TournamentPlatform import TournamentPlatform
 
 
-def main():
+def main() -> None:
     print("\n=== DataDeck Tournament Platform ===\n")
 
     print("Registering Tournament Cards...\n")

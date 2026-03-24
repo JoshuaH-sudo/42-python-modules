@@ -3,7 +3,7 @@ from site import getusersitepackages
 import sys
 
 
-def construct():
+def construct() -> None:
     print("\nMATRIX STATUS: ", end="")
     is_virtual_env = (
         "VIRTUAL_ENV" in os.environ or sys.prefix != sys.base_prefix

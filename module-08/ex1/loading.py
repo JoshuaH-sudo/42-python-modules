@@ -1,7 +1,7 @@
 import importlib
 
 
-def loading():
+def loading() -> None:
     print("LOADING STATUS: loading programs...\n")
     print("Checking dependencies:")
     dependencies = [

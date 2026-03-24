@@ -4,7 +4,7 @@ from ex0.CreatureCard import CreatureCard
 from .Deck import Deck
 
 
-def main():
+def main() -> None:
     print("\n=== DataDeck Deck Builder ===\n")
     game_state = {"available_mana": 20}
 

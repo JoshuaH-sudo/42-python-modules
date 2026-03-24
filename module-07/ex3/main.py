@@ -3,7 +3,7 @@ from .FantasyCardFactory import FantasyCardFactory
 from .GameEngine import GameEngine
 
 
-def main():
+def main() -> None:
     print("\n=== DataDeck Game Engine ===\n")
     print("Configuring Fantasy Card Game...")
     card_factory = FantasyCardFactory()

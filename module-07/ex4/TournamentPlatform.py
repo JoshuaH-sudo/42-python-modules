@@ -3,7 +3,7 @@ import statistics
 
 
 class TournamentPlatform:
-    def __init__(self):
+    def __init__(self) -> None:
         self.registered_cards = []
         self.card_ids = {}
         self.matches_played = 0

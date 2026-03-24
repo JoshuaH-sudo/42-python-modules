@@ -21,7 +21,7 @@ class SpellCard(Card):
             raise ValueError(f"Invalid effect_type: {effect_type}")
         self.effect_type = effect_type
 
-    def play(self, game_state) -> dict:
+    def play(self, game_state: dict) -> dict:
         if not self.is_playable(game_state["available_mana"]):
             return {"error": "Not enough mana to play this card."}
 

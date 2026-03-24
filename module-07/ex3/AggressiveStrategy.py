@@ -2,7 +2,7 @@ from .GameStrategy import GameStrategy
 
 
 class AggressiveStrategy(GameStrategy):
-    def __init__(self, name="AggressiveStrategy"):
+    def __init__(self, name: str = "AggressiveStrategy") -> None:
         super().__init__(name)
 
     def execute_turn(self, hand: list, battlefield: list) -> dict:

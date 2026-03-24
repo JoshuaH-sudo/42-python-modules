@@ -28,10 +28,10 @@ class TournamentCard(Card, Combatable, Rankable):
             return self.attack * self.health
         return (self.attack * self.health) // (self.losses + 1)
 
-    def update_wins(self, wins: int):
+    def update_wins(self, wins: int) -> None:
         self.wins += wins
 
-    def update_losses(self, losses: int):
+    def update_losses(self, losses: int) -> None:
         self.losses += losses
 
     def get_rank_info(self) -> dict:
@@ -52,7 +52,7 @@ class TournamentCard(Card, Combatable, Rankable):
             "rating": self.calculate_rating(),
         }
 
-    def attack(self, target) -> dict:
+    def attack(self, target: "TournamentCard") -> dict:
         damage = self.attack
         return {
             "attacker": self.name,

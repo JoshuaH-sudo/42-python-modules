@@ -10,12 +10,12 @@ class Deck:
     def __init__(self):
         self.cards: List[Card] = []
 
-    def add_card(self, card: Card):
+    def add_card(self, card: Card) -> None:
         if not card.__class__.__bases__[0] == Card:
             raise TypeError("card must be an instance of Card")
         self.cards.insert(0, card)
 
-    def remove_card(self, card_name: str):
+    def remove_card(self, card_name: str) -> Card | None:
         index = 0
         for card in self.cards:
             if card.name == card_name:
@@ -23,15 +23,15 @@ class Deck:
             index += 1
         return None
 
-    def shuffle(self):
+    def shuffle(self) -> None:
         random.shuffle(self.cards)
 
-    def draw_card(self):
+    def draw_card(self) -> Card | None:
         if not self.cards:
             return None
         return self.cards.pop(0)
 
-    def get_deck_stats(self):
+    def get_deck_stats(self) -> dict:
         total_cards = 0
         total_cost = 0
         creature_cards = 0

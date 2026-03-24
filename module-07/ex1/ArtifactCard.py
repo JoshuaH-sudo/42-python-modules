@@ -11,7 +11,7 @@ class ArtifactCard(Card):
         self.durability = durability
         self.effect = effect
 
-    def play(self, game_state) -> dict:
+    def play(self, game_state: dict) -> dict:
         if not self.is_playable(game_state["available_mana"]):
             return {"error": "Not enough mana to play this card."}
         self.durability -= 1

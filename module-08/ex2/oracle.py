@@ -1,7 +1,7 @@
 from os import getenv
 
 
-def oracle():
+def oracle() -> None:
     print("ORACLE STATUS: Reading the Matrix...\n")
     try:
         from dotenv import load_dotenv
