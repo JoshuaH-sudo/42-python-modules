@@ -5,10 +5,7 @@ from abc import ABC, abstractmethod
 class DataProcessor(ABC):
     @abstractmethod
     def process(self, data: Any) -> str:
-        if type(data) is str:
-            print(f'Processing data: "{data}"')
-        else:
-            print(f"Processing data: {data}")
+        pass
 
     @abstractmethod
     def validate(self, data: Any) -> bool:

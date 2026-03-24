@@ -213,15 +213,46 @@ class StreamProcessor:
         for stream_dict in self.streams:
             stream = stream_dict["stream"]
             try:
-                results = stream.filter_data(data)
-                if results:
-                    stream.process_batch(results)
-                    match stream:
-                        case SensorStream():
+                match stream:
+                    case SensorStream():
+                        sensor_data = [
+                            item
+                            for item in data
+                            if isinstance(item, dict)
+                            and all(
+                                isinstance(key, str)
+                                and isinstance(value, (int, float))
+                                for key, value in item.items()
+                            )
+                        ]
+                        sensor_results = stream.filter_data(sensor_data)
+                        if sensor_results:
+                            stream.process_batch(sensor_results)
                             self.total_sensor += stream.number_of_records
-                        case TransactionStream():
+                    case TransactionStream():
+                        transaction_data = [
+                            item
+                            for item in data
+                            if isinstance(item, dict)
+                            and all(
+                                isinstance(key, str)
+                                and isinstance(value, (int, float))
+                                for key, value in item.items()
+                            )
+                        ]
+                        transaction_results = stream.filter_data(
+                            transaction_data
+                        )
+                        if transaction_results:
+                            stream.process_batch(transaction_results)
                             self.total_trans += stream.number_of_records
-                        case EventStream():
+                    case EventStream():
+                        event_data = [
+                            item for item in data if isinstance(item, str)
+                        ]
+                        event_results = stream.filter_data(event_data)
+                        if event_results:
+                            stream.process_batch(event_results)
                             self.total_event += stream.number_of_records
             except Exception:
                 continue
@@ -265,10 +296,10 @@ def data_stream() -> None:
     print("Initializing Sensor Stream...")
     sensor_stream = SensorStream("SENSOR_001")
     stream_processor.add_stream(sensor_stream, "Environmental Data")
-    sensor_data = [
+    sensor_data: List[Dict[str, float]] = [
         {"temp": 22.5},
-        {"humidity": 65},
-        {"pressure": 1013},
+        {"humidity": 65.0},
+        {"pressure": 1013.0},
     ]
     print(f"Processing sensor batch: {sensor_data}")
     sensor_stream.process_batch(sensor_data)

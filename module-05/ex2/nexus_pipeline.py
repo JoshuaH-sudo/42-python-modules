@@ -75,6 +75,11 @@ class JSONAdapter(ProcessingPipeline):
                     "Output: Processed temperature reading: "
                     f"{data['value']} {data['unit']} ({data['status']})"
                 )
+            return (
+                "Output: Processed sensor reading: "
+                f"{data['sensor']}={data['value']} {data['unit']} "
+                f"({data['status']})"
+            )
 
 
 class CSVAdapter(ProcessingPipeline):
