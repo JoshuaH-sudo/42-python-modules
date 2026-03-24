@@ -33,7 +33,7 @@ fi
 
 sort -u "$tmp_file" > "$sorted_file"
 
-printf '%s\n' 'Running flake8 on Python files included in this push...'
+printf '%s\n' 'Running flake8 and mypy on Python files included in this push...'
 
 set --
 

@@ -11,7 +11,7 @@ if [ -z "$python_files" ]; then
     exit 0
 fi
 
-printf '%s\n' 'Running flake8 on staged Python files...'
+printf '%s\n' 'Running flake8 and mypy on staged Python files...'
 
 set --
 
