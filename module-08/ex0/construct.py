@@ -1,5 +1,3 @@
-# detect if python is runing in a virtual environment
-# Authorized: sys, os, site modules, print()
 import os
 from site import getusersitepackages
 import sys
