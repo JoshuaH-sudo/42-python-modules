@@ -3,7 +3,7 @@ from os import getenv
 
 
 def oracle():
-    print("ORACLE STATUS: reading the Matrix...\n")
+    print("ORACLE STATUS: Reading the Matrix...\n")
 
     load_dotenv()
     mode = getenv("MATRIX_MODE")
