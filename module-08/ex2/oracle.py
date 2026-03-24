@@ -21,8 +21,9 @@ def oracle():
     ]:
         if var_value is None:
             print(f"[ERROR] Missing environment variable: {var_name}")
-        else:
-            print(f"[OK] {var_name}: {var_value}")
+    #     else:
+    #         print(f"[OK] {var_name}: {var_value}")
+    # print("")
 
     if None in [mode, database_url, api_key, log_level, zion_endpoint]:
         print("\nPlease set the missing environment variables in a .env file")
