@@ -6,7 +6,7 @@ authors = [
     { name = "jhoban", email = "jhoban@42berlin.de" },
 ]
 dependencies = [
-    "pandas==2.1.0",
-    "numpy==1.25.0",
-    "matplotlib==3.8.0",
+    "pandas",
+    "numpy",
+    "matplotlib",
 ]
