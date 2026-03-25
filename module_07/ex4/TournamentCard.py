@@ -8,7 +8,7 @@ class TournamentCard(Card, Combatable, Rankable):
         self, name: str, cost: int, rarity: str, attack: int, health: int
     ):
         super().__init__(name, cost, rarity)
-        self.attack = attack
+        self.damage = attack
         self.health = health
         self.wins = 0
         self.losses = 0
@@ -24,8 +24,8 @@ class TournamentCard(Card, Combatable, Rankable):
         }
 
     def calculate_rating(self) -> int:
-        win_loss_ratio = self.wins / (self.losses + 1)
-        return int((self.attack + self.health) * (1 + win_loss_ratio) * 100)
+        win_loss_ratio = self.wins / (self.losses + 1) * 100
+        return int(win_loss_ratio)
 
     def update_wins(self, wins: int) -> None:
         self.wins += wins
@@ -44,23 +44,22 @@ class TournamentCard(Card, Combatable, Rankable):
     def get_tournament_stats(self) -> dict:
         return {
             "name": self.name,
-            "attack": self.attack,
+            "attack": self.damage,
             "health": self.health,
             "wins": self.wins,
             "losses": self.losses,
             "rating": self.calculate_rating(),
         }
 
-    def attack(self, target: "TournamentCard") -> dict:
-        damage = self.attack
+    def attack(self, target: str) -> dict:
         return {
             "attacker": self.name,
-            "target": target.name if hasattr(target, "name") else str(target),
-            "damage_dealt": damage,
+            "target": target,
+            "damage_dealt": self.damage,
         }
 
     def defend(self, incoming_damage: int) -> dict:
-        actual_damage = max(0, incoming_damage - (self.health // 2))
+        actual_damage = incoming_damage - (self.health // 2)
         self.health -= actual_damage
         return {
             "defender": self.name,
@@ -72,7 +71,7 @@ class TournamentCard(Card, Combatable, Rankable):
     def get_combat_stats(self) -> dict:
         return {
             "name": self.name,
-            "attack": self.attack,
+            "attack": self.damage,
             "health": self.health,
             "rating": self.calculate_rating(),
         }

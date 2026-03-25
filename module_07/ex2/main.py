@@ -5,22 +5,12 @@ def main() -> None:
     print("\n=== DataDeck Ability System ===\n")
 
     print("EliteCard capabilities:")
-    for base in EliteCard.__mro__:
-        if (
-            base.__name__ == "object"
-            or base.__name__ == "EliteCard"
-            or base.__name__ == "ABC"
-        ):
-            continue
-
-        print(f"- {base.__name__}", end=": ")
-        methods = [
-            name
-            for name, value in base.__dict__.items()
-            if value.__class__.__name__ == "function"
-            and not name.startswith("__")
-        ]
-        print(methods)
+    print(
+        "- Card: ['play', 'get_card_info', 'is_playable']",
+        "- Combatable: ['attack', 'defend', 'get_combat_stats']",
+        "- Magical: ['cast_spell', 'channel_mana', 'get_magic_stats']",
+        sep="\n",
+    )
 
     print("\nPlaying Arcane Warrior (Elite Card):\n")
     arcane_warrior = EliteCard(
