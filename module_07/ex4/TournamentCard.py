@@ -25,7 +25,7 @@ class TournamentCard(Card, Combatable, Rankable):
 
     def calculate_rating(self) -> int:
         win_loss_ratio = self.wins / (self.losses + 1)
-        return int((self.attack + self.health) * (1 + win_loss_ratio))
+        return int((self.attack + self.health) * (1 + win_loss_ratio) * 100)
 
     def update_wins(self, wins: int) -> None:
         self.wins += wins
