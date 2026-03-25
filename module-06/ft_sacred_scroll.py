@@ -20,12 +20,14 @@ def ft_sacred_scroll() -> None:
     print(f"alchemy.create_water(): {alchemy.create_water()}")
 
     try:
-        print(f"alchemy.create_earth(): {alchemy.create_earth()}")
+        earth_value = alchemy.create_earth()  # type: ignore[attr-defined]
+        print(f"alchemy.create_earth(): {earth_value}")
     except AttributeError:
         print("alchemy.create_earth(): AttributeError - not exposed")
 
     try:
-        print(f"alchemy.create_air(): {alchemy.create_air()}")
+        air_value = alchemy.create_air()  # type: ignore[attr-defined]
+        print(f"alchemy.create_air(): {air_value}")
     except AttributeError:
         print("alchemy.create_air(): AttributeError - not exposed")
     print("")
