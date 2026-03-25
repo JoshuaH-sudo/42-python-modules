@@ -1,12 +1,14 @@
+from typing import Dict, List
+
 from .TournamentCard import TournamentCard
 import statistics
 
 
 class TournamentPlatform:
     def __init__(self) -> None:
-        self.registered_cards = []
-        self.card_ids = {}
-        self.matches_played = 0
+        self.registered_cards: List[TournamentCard] = []
+        self.card_ids: Dict[str, TournamentCard] = {}
+        self.matches_played: int = 0
 
     def register_card(self, card: TournamentCard) -> str:
         card_id = (
@@ -26,26 +28,16 @@ class TournamentPlatform:
         card1 = self.card_ids[card1_id]
         card2 = self.card_ids[card2_id]
 
-        card1_wins = 0
-        card2_wins = 0
+        if card1.attack >= card2.attack:
+            winner_card, loser_card = card1, card2
+            winner_id, loser_id = card1_id, card2_id
+        elif card2.attack > card1.attack:
+            winner_card, loser_card = card2, card1
+            winner_id, loser_id = card2_id, card1_id
 
-        for _ in range(100):
-            if card1.attack > card2.health:
-                card1_wins += 1
-            elif card2.attack > card1.health:
-                card2_wins += 1
-
-        card1.update_wins(card1_wins)
-        card1.update_losses(card2_wins)
-        card2.update_wins(card2_wins)
-        card2.update_losses(card1_wins)
+        winner_card.update_wins(1)
+        loser_card.update_losses(1)
         self.matches_played += 1
-
-        winner_id = card1_id if card1_wins > card2_wins else card2_id
-        loser_id = card2_id if card1_wins > card2_wins else card1_id
-        winner_card = card1 if card1_wins > card2_wins else card2
-        loser_card = card2 if card1_wins > card2_wins else card1
-
         return {
             "winner": winner_id,
             "loser": loser_id,
