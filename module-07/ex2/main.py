@@ -45,7 +45,7 @@ def main() -> None:
     mana_channel_result = arcane_warrior.channel_mana(amount=3)
     print(f"Mana channel: {mana_channel_result}")
 
-    print("Multiple interface implementation successful!")
+    print("\nMultiple interface implementation successful!")
 
 
 if __name__ == "__main__":
