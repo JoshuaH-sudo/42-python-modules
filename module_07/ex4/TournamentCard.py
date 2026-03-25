@@ -5,9 +5,9 @@ from .Rankable import Rankable
 
 class TournamentCard(Card, Combatable, Rankable):
     def __init__(
-        self, name: str, cost: int, rarity: str, attack: int, health: int
+        self, name: str, cost: int, rarity: str
     ):
-        super().__init__(name, cost, rarity)
+        Card().__init__(name, cost, rarity)
         self.damage = attack
         self.health = health
         self.wins = 0

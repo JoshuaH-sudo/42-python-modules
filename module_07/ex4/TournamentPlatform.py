@@ -28,10 +28,10 @@ class TournamentPlatform:
         card1 = self.card_ids[card1_id]
         card2 = self.card_ids[card2_id]
 
-        if card1.attack >= card2.attack:
+        if card1.damage >= card2.damage:
             winner_card, loser_card = card1, card2
             winner_id, loser_id = card1_id, card2_id
-        elif card2.attack > card1.attack:
+        elif card2.damage > card1.damage:
             winner_card, loser_card = card2, card1
             winner_id, loser_id = card2_id, card1_id
 

@@ -11,8 +11,6 @@ class Deck:
         self.cards: List[Card] = []
 
     def add_card(self, card: Card) -> None:
-        if not card.__class__.__bases__[0] == Card:
-            raise TypeError("card must be an instance of Card")
         self.cards.insert(0, card)
 
     def remove_card(self, card_name: str) -> Card | None:
