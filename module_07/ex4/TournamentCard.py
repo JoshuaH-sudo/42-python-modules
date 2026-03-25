@@ -1,4 +1,4 @@
-from random import random
+from random import randint
 
 from ex0.Card import Card
 from ex2.Combatable import Combatable
@@ -7,9 +7,9 @@ from .Rankable import Rankable
 
 class TournamentCard(Card, Combatable, Rankable):
     def __init__(self, name: str, cost: int, rarity: str):
-        Card().__init__(name, cost, rarity)
-        self.damage = random.randint(1, 10)
-        self.health = random.randint(1, 10)
+        super().__init__(name, cost, rarity)
+        self.damage = randint(1, 10)
+        self.health = randint(1, 10)
         self.wins = 0
         self.losses = 0
 
@@ -24,7 +24,9 @@ class TournamentCard(Card, Combatable, Rankable):
         }
 
     def calculate_rating(self) -> int:
-        win_loss_ratio = self.wins / (self.losses + 1) * 100
+        win_loss_ratio = (
+            self.wins / (self.losses + 1) + self.damage + self.health * 100
+        )
         return int(win_loss_ratio)
 
     def update_wins(self, wins: int) -> None:
