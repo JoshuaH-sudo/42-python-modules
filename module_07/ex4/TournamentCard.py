@@ -1,15 +1,15 @@
+from random import random
+
 from ex0.Card import Card
 from ex2.Combatable import Combatable
 from .Rankable import Rankable
 
 
 class TournamentCard(Card, Combatable, Rankable):
-    def __init__(
-        self, name: str, cost: int, rarity: str
-    ):
+    def __init__(self, name: str, cost: int, rarity: str):
         Card().__init__(name, cost, rarity)
-        self.damage = attack
-        self.health = health
+        self.damage = random.randint(1, 10)
+        self.health = random.randint(1, 10)
         self.wins = 0
         self.losses = 0
 

@@ -12,16 +12,12 @@ def main() -> None:
         name="Fire Dragon",
         cost=5,
         rarity="legendary",
-        attack=8,
-        health=8,
     )
 
     wizard = TournamentCard(
         name="Ice Wizard",
         cost=4,
         rarity="rare",
-        attack=7,
-        health=6,
     )
 
     dragon_id = platform.register_card(dragon)

@@ -51,6 +51,32 @@ else
     fi
 fi
 
+mypy_args=''
+for file in "$@"; do
+    case "$file" in
+        module_07/*)
+            ;;
+        *)
+            mypy_args="$mypy_args
+$file"
+            ;;
+    esac
+done
+
+if [ -z "$mypy_args" ]; then
+    printf '%s\n' 'Skipping mypy: only module_07 files were provided.'
+    exit 0
+fi
+
+set --
+while IFS= read -r file; do
+    if [ -n "$file" ]; then
+        set -- "$@" "$file"
+    fi
+done <<EOF
+$mypy_args
+EOF
+
 printf '%s\n' 'Running mypy...'
 if run_python_module mypy "$@"; then
     :

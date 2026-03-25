@@ -36,8 +36,8 @@ You should see executable permissions on:
 
 ## What The Hooks Do
 
-- `pre-commit` runs `flake8` on staged Python files
-- `pre-push` runs `flake8` on Python files included in the push
+- `pre-commit` runs `flake8` on staged Python files, then runs `mypy` on those same files except anything under `module_07/`
+- `pre-push` runs `flake8` on Python files included in the push, then runs `mypy` on those same files except anything under `module_07/`
 
 ## Verify Flake8 Works
 
