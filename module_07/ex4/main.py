@@ -39,11 +39,13 @@ def main() -> None:
 
     print("Tournament Leaderboard:")
     leaderboard = platform.get_leaderboard()
-    for idx, card_info in enumerate(leaderboard, 1):
+    index = 1
+    for card_info in leaderboard:
         print(
-            f"{idx}. {card_info['name']} - Rating: {card_info['rating']}, "
+            f"{index}. {card_info['name']} - Rating: {card_info['rating']}, "
             f"({card_info['wins']}-{card_info['losses']})"
         )
+        index += 1
 
     print("\nPlatform Report:")
     report = platform.generate_tournament_report()
