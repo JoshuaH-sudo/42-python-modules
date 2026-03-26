@@ -22,31 +22,46 @@ def mage_stats(mages: List[Dict]) -> Dict:
 
     max_power = max(mages, key=lambda mage: mage["power"])["power"]
     min_power = min(mages, key=lambda mage: mage["power"])["power"]
-    total_power = sum(map(lambda mage: mage["power"], mages))
-    avg_power = round(total_power / len(mages), 2)
+    avg_power = sum(map(lambda mage: mage["power"], mages)) / mages.__len__()
 
     return {
         "max_power": max_power,
         "min_power": min_power,
-        "avg_power": avg_power,
+        "avg_power": f"{avg_power:.2f}",
     }
 
 
 def lambda_spells():
     artifacts = [
-        {"name": "Orb", "power": 1},
-        {"name": "staff", "power": 10},
-        {"name": "sword", "power": 3},
+        {"name": "Earth Shield", "power": 112, "type": "armor"},
+        {"name": "Earth Shield", "power": 72, "type": "focus"},
+        {"name": "Lightning Rod", "power": 66, "type": "focus"},
+        {"name": "Wind Cloak", "power": 98, "type": "relic"},
     ]
-    print(artifact_sorter(artifacts))
     mages = [
-        {"name": "gandalf", "power": 3, "element": "Fire"},
-        {"name": "avatar", "power": 12, "element": "Wind"},
-        {"name": "harry", "power": 7, "element": "Dark"},
+        {"name": "Luna", "power": 65, "element": "shadow"},
+        {"name": "Ember", "power": 62, "element": "water"},
+        {"name": "Ash", "power": 69, "element": "light"},
+        {"name": "Morgan", "power": 81, "element": "lightning"},
+        {"name": "Kai", "power": 66, "element": "fire"},
     ]
-    print(power_filter(mages, 7))
-    spells = ["fireball", "lighting bolt", "abrakadabra"]
+    spells = ["shield", "heal", "fireball", "meteor"]
+    print("Original Artifacts:")
+    print(artifacts)
+    print("\nOriginal Mages:")
+    print(mages)
+    print("\nOriginal Spells:")
+    print(spells)
+
+    print("\n========================================")
+
+    print("\nSorted Artifacts by Power:")
+    print(artifact_sorter(artifacts))
+    print("\nMages with Power >= 60:")
+    print(power_filter(mages, 60))
+    print("\nTransformed Spells:")
     print(spell_transformer(spells))
+    print("\nMage Stats:")
     print(mage_stats(mages))
     pass
 
