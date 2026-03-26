@@ -46,11 +46,6 @@ class TournamentPlatform:
         }
 
     def get_leaderboard(self) -> List:
-        sorted_cards = sorted(
-            [(cid, card) for cid, card in self.card_ids.items()],
-            key=lambda x: x[1].calculate_rating(),
-            reverse=True,
-        )
         return [
             {
                 "id": card_id,
@@ -59,7 +54,7 @@ class TournamentPlatform:
                 "wins": card.wins,
                 "losses": card.losses,
             }
-            for card_id, card in sorted_cards
+            for card_id, card in self.card_ids.items()
         ]
 
     def generate_tournament_report(self) -> Dict:
