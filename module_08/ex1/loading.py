@@ -46,7 +46,7 @@ def loading() -> None:
     plt = imported_modules["matplotlib.pyplot"]
 
     sample_matrix_data = np.random.rand(1000, 1000)
-    print("Analysing Matrix data...")
+    print("Analyzing Matrix data...")
     analysis_result = np.mean(sample_matrix_data, axis=0)
     print("Processing 1000 data points...")
     processed_data = pd.DataFrame(analysis_result, columns=["Mean Value"])
