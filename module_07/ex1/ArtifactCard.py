@@ -1,4 +1,5 @@
 from ex0.Card import Card
+from typing import Dict
 
 
 class ArtifactCard(Card):
@@ -11,7 +12,7 @@ class ArtifactCard(Card):
         self.durability = durability
         self.effect = effect
 
-    def play(self, game_state: dict) -> dict:
+    def play(self, game_state: Dict) -> Dict:
         if not self.is_playable(game_state["available_mana"]):
             return {"error": "Not enough mana to play this card."}
         self.durability -= 1
@@ -21,7 +22,7 @@ class ArtifactCard(Card):
             "effect": self.effect,
         }
 
-    def activate_ability(self) -> dict:
+    def activate_ability(self) -> Dict:
         return {
             "name": self.name,
         }

@@ -1,9 +1,11 @@
+from random import choice
+from typing import Dict, List
+
 from ex0.Card import Card
 from ex0.CreatureCard import CreatureCard
 from ex1.SpellCard import SpellCard
 from ex1.ArtifactCard import ArtifactCard
 from .CardFactory import CardFactory
-from random import choice
 
 
 class FantasyCardFactory(CardFactory):
@@ -89,13 +91,13 @@ class FantasyCardFactory(CardFactory):
                 raise ValueError(f"Unsupported artifact type: {name_or_power}")
         raise TypeError("name_or_power must be str, int, or None")
 
-    def create_themed_deck(self, size: int) -> dict:
+    def create_themed_deck(self, size: int) -> Dict:
         deck = {"creature": [], "spell": [], "artifact": []}
         deck["creature"].append(self.create_creature())
         deck["spell"].append(self.create_spell())
         deck["artifact"].append(self.create_artifact())
         for _ in range(size - 3):
-            card_type = choice(list(self.supported_types.keys()))
+            card_type = choice(List(self.supported_types.keys()))
             if card_type == "creature":
                 deck["creature"].append(self.create_creature())
             elif card_type == "spell":
@@ -104,7 +106,7 @@ class FantasyCardFactory(CardFactory):
                 deck["artifact"].append(self.create_artifact())
         return deck
 
-    def get_supported_types(self) -> dict:
+    def get_supported_types(self) -> Dict:
         return {
             "creatures": self.supported_types["creature"],
             "spells": self.supported_types["spell"],

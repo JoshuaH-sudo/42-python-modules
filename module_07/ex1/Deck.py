@@ -3,7 +3,7 @@ from ex0.Card import Card
 from ex0.CreatureCard import CreatureCard
 from .ArtifactCard import ArtifactCard
 from .SpellCard import SpellCard
-from typing import List
+from typing import Dict, List
 
 
 class Deck:
@@ -29,7 +29,7 @@ class Deck:
             return None
         return self.cards.pop(0)
 
-    def get_deck_stats(self) -> dict:
+    def get_deck_stats(self) -> Dict:
         total_cards = 0
         total_cost = 0
         creature_cards = 0

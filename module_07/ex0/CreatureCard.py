@@ -1,4 +1,5 @@
 from .Card import Card
+from typing import Dict
 
 
 class CreatureCard(Card):
@@ -13,7 +14,7 @@ class CreatureCard(Card):
         self.attack = attack
         self.health = health
 
-    def play(self, game_state: dict) -> dict:
+    def play(self, game_state: Dict) -> Dict:
         if not self.is_playable(game_state["available_mana"]):
             return {"error": "Not enough mana to play this card."}
         return {
@@ -22,7 +23,7 @@ class CreatureCard(Card):
             "effect": "Creature summoned to battlefield",
         }
 
-    def get_card_info(self) -> dict:
+    def get_card_info(self) -> Dict:
         return {
             "name": self.name,
             "cost": self.cost,
@@ -31,7 +32,7 @@ class CreatureCard(Card):
             "health": self.health,
         }
 
-    def attack_target(self, target: "CreatureCard") -> dict:
+    def attack_target(self, target: "CreatureCard") -> Dict:
         return {
             "attacker": self.name,
             "target": target.name,

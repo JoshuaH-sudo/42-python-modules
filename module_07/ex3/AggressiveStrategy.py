@@ -1,16 +1,16 @@
 from .GameStrategy import GameStrategy
-
+from typing import Dict, List
 
 class AggressiveStrategy(GameStrategy):
     def __init__(self, name: str = "AggressiveStrategy") -> None:
         super().__init__(name)
 
-    def execute_turn(self, hand: list, battlefield: list) -> dict:
+    def execute_turn(self, hand: List, battlefield: List) -> Dict:
         available_mana = 10
         mana_used = 0
         cards_played = []
-        for card in sorted(hand, key=lambda c: c.cost):
-            if card.cost <= 3 and mana_used + card.cost <= available_mana:
+        for card in hand: 
+            if mana_used + card.cost <= available_mana:
                 cards_played.append(card)
                 mana_used += card.cost
         targets = self.prioritize_targets(battlefield)
@@ -25,5 +25,5 @@ class AggressiveStrategy(GameStrategy):
     def get_strategy_name(self) -> str:
         return self.name
 
-    def prioritize_targets(self, available_targets: list) -> list:
+    def prioritize_targets(self, available_targets: List) -> List:
         return available_targets

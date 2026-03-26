@@ -1,5 +1,6 @@
 from ex0.Card import Card
 from enum import Enum
+from typing import Dict
 
 
 class EffectType(Enum):
@@ -21,7 +22,7 @@ class SpellCard(Card):
             raise ValueError(f"Invalid effect_type: {effect_type}")
         self.effect_type = effect_type
 
-    def play(self, game_state: dict) -> dict:
+    def play(self, game_state: Dict) -> Dict:
         if not self.is_playable(game_state["available_mana"]):
             return {"error": "Not enough mana to play this card."}
 
@@ -40,7 +41,7 @@ class SpellCard(Card):
             "effect": effect,
         }
 
-    def resolve_effect(self) -> dict:
+    def resolve_effect(self) -> Dict:
         return {
             "name": self.name,
         }

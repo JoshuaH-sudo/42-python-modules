@@ -19,7 +19,7 @@ class TournamentPlatform:
         self.card_ids[card_id] = card
         return card_id
 
-    def create_match(self, card1_id: str, card2_id: str) -> dict:
+    def create_match(self, card1_id: str, card2_id: str) -> Dict:
         if card1_id not in self.card_ids or card2_id not in self.card_ids:
             raise ValueError(
                 "Both card IDs must be registered on the platform."
@@ -45,7 +45,7 @@ class TournamentPlatform:
             "loser_rating": loser_card.calculate_rating(),
         }
 
-    def get_leaderboard(self) -> list:
+    def get_leaderboard(self) -> List:
         sorted_cards = sorted(
             [(cid, card) for cid, card in self.card_ids.items()],
             key=lambda x: x[1].calculate_rating(),
@@ -62,7 +62,7 @@ class TournamentPlatform:
             for card_id, card in sorted_cards
         ]
 
-    def generate_tournament_report(self) -> dict:
+    def generate_tournament_report(self) -> Dict:
         avg_rating = (
             statistics.mean(
                 [card.calculate_rating() for card in self.registered_cards]

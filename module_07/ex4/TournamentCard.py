@@ -1,4 +1,5 @@
 from random import randint
+from typing import Dict
 
 from ex0.Card import Card
 from ex2.Combatable import Combatable
@@ -13,7 +14,7 @@ class TournamentCard(Card, Combatable, Rankable):
         self.wins = 0
         self.losses = 0
 
-    def play(self, game_state: dict) -> dict:
+    def play(self, game_state: Dict) -> Dict:
         available_mana = game_state.get("available_mana", 0)
         if not self.is_playable(available_mana):
             return {"error": "Not enough mana to play this card."}
@@ -35,7 +36,7 @@ class TournamentCard(Card, Combatable, Rankable):
     def update_losses(self, losses: int) -> None:
         self.losses += losses
 
-    def get_rank_info(self) -> dict:
+    def get_rank_info(self) -> Dict:
         return {
             "name": self.name,
             "wins": self.wins,
@@ -43,7 +44,7 @@ class TournamentCard(Card, Combatable, Rankable):
             "rating": self.calculate_rating(),
         }
 
-    def get_tournament_stats(self) -> dict:
+    def get_tournament_stats(self) -> Dict:
         return {
             "name": self.name,
             "attack": self.damage,
@@ -53,14 +54,14 @@ class TournamentCard(Card, Combatable, Rankable):
             "rating": self.calculate_rating(),
         }
 
-    def attack(self, target: str) -> dict:
+    def attack(self, target: str) -> Dict:
         return {
             "attacker": self.name,
             "target": target,
             "damage_dealt": self.damage,
         }
 
-    def defend(self, incoming_damage: int) -> dict:
+    def defend(self, incoming_damage: int) -> Dict:
         actual_damage = incoming_damage - (self.health // 2)
         self.health -= actual_damage
         return {
@@ -70,7 +71,7 @@ class TournamentCard(Card, Combatable, Rankable):
             "health_remaining": self.health,
         }
 
-    def get_combat_stats(self) -> dict:
+    def get_combat_stats(self) -> Dict:
         return {
             "name": self.name,
             "attack": self.damage,
