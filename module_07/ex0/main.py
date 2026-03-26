@@ -6,12 +6,8 @@ def main() -> None:
     print("Testing Abstract Base Class Design:\n")
 
     game_state = {"available_mana": 6}
-    try:
-        goblin_card = CreatureCard("Goblin Warrior", 2, "Common", 3, 2)
-        dragon_card = CreatureCard("Fire Dragon", 5, "Legendary", 7, 5)
-    except TypeError as e:
-        print(f"Error: {e}")
-        return
+    goblin_card = CreatureCard("Goblin Warrior", 2, "Common", 3, 2)
+    dragon_card = CreatureCard("Fire Dragon", 5, "Legendary", 7, 5)
 
     print("CreateCard Info:")
     print(dragon_card.get_card_info())

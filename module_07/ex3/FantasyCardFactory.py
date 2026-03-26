@@ -40,8 +40,6 @@ class FantasyCardFactory(CardFactory):
                 return CreatureCard(
                     name="Goblin", cost=2, rarity="common", attack=2, health=1
                 )
-            else:
-                raise ValueError(f"Unsupported creature type: {name_or_power}")
 
     def create_spell(self, name_or_power: str | int | None = None) -> Card:
         if name_or_power is None:
@@ -62,9 +60,6 @@ class FantasyCardFactory(CardFactory):
                     rarity="rare",
                     effect_type="damage",
                 )
-            else:
-                raise ValueError(f"Unsupported spell type: {name_or_power}")
-        raise TypeError("name_or_power must be str, int, or None")
 
     def create_artifact(self, name_or_power: str | int | None = None) -> Card:
         if name_or_power is None:
@@ -87,9 +82,6 @@ class FantasyCardFactory(CardFactory):
                     durability=3,
                     effect="Permanent +1 mana per turn",
                 )
-            else:
-                raise ValueError(f"Unsupported artifact type: {name_or_power}")
-        raise TypeError("name_or_power must be str, int, or None")
 
     def create_themed_deck(self, size: int) -> Dict:
         deck = {"creature": [], "spell": [], "artifact": []}

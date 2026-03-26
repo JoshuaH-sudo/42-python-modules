@@ -82,8 +82,6 @@ class EliteCard(Card, Combatable, Magical):
         }
 
     def channel_mana(self, amount: int) -> Dict:
-        if amount < 0:
-            raise ValueError("amount must be non-negative.")
         self.mana_pool += amount
         return {
             "card": self.name,

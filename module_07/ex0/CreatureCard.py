@@ -10,9 +10,11 @@ class CreatureCard(Card):
     ):
         super().__init__(name, cost, rarity)
         if attack < 0 or health < 0:
-            raise ValueError("Attack and health must be non-negative.")
-        self.attack = attack
-        self.health = health
+            self.attack = 1
+            self.health = 1
+        else:
+            self.attack = attack
+            self.health = health
 
     def play(self, game_state: Dict) -> Dict:
         if not self.is_playable(game_state["available_mana"]):
