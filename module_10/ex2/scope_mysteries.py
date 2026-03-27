@@ -37,11 +37,10 @@ def memory_vault() -> dict[str, Callable]:
     def store(key: str, value: str | None = None):
         if value is not None:
             vault[key] = value
-            return f"Stored: {key} -> {value}"
-        return vault.get(key, "Key not found.")
+        return vault.get(key, "Memory not found")
 
     def recall(key: str):
-        return vault.get(key, "Key not found.")
+        return vault.get(key, "Memory not found")
 
     return {"store": store, "recall": recall}
 
@@ -66,11 +65,11 @@ def scope_mysteries():
 
     print("\nMemory Vault:")
     store, recall = memory_vault().values()
-    print(store("spell1", "Fireball"))  # Output: "Stored: spell1 -> Fireball"
-    print(store("spell2", "Heal"))  # Output: "Stored: spell2 -> Heal"
+    store("spell1", "Fireball")
+    store("spell2", "Heal")
     print(recall("spell1"))  # Output: "Fireball"
     print(recall("spell2"))  # Output: "Heal"
-    print(recall("spell3"))  # Output: "Key not found."
+    print(recall("spell3"))  # Output: "Memory not found"
 
 
 if __name__ == "__main__":
