@@ -1,7 +1,6 @@
-# type: ignore
 from functools import reduce, partial, lru_cache, singledispatch
 from operator import add, mul
-from typing import Any, Callable, Dict, List
+from typing import Callable, Dict, List
 
 import time
 
@@ -37,7 +36,7 @@ def memoized_fibonacci(n: int) -> int:
 
 
 @singledispatch
-def spell_dispatcher(arg: Any) -> Callable:
+def spell_dispatcher() -> Callable:  # type: ignore
     return spell_dispatcher
 
 
@@ -50,13 +49,19 @@ def _(enchantment: str) -> Callable:
 
 
 @spell_dispatcher.register
-def _(damage: int) -> Dict:
-    return {"damage": damage}
+def _(damage: int) -> Callable:
+    def apply_damage(target: str) -> Dict:
+        return {"damage": damage, "target": target}
+
+    return apply_damage
 
 
 @spell_dispatcher.register
-def _(multi_cast: list) -> Dict:
-    return {"multi_cast": multi_cast}
+def _(multi_cast: list) -> Callable:
+    def apply_multi_cast(target: str) -> Dict:
+        return {"multi_cast": multi_cast, "target": target}
+
+    return apply_multi_cast
 
 
 def base_enchantment(power: int, element: str, target: str) -> Dict:
@@ -93,9 +98,9 @@ def functools_artifacts():
     damage_spell = spell_dispatcher(25)
     enchantment_spell = spell_dispatcher("flame")
     multi_cast_spell = spell_dispatcher([10, 20, 30])
-    print("Damage Spell:", damage_spell)
+    print("Damage Spell:", damage_spell("enemy"))
     print("Enchantment Spell:", enchantment_spell("sword"))
-    print("Multi-Cast Spell:", multi_cast_spell)
+    print("Multi-Cast Spell:", multi_cast_spell("enemy"))
 
 
 if __name__ == "__main__":
