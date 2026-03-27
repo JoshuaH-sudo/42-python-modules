@@ -1,10 +1,6 @@
 from typing import Callable
 
 
-def spell_sequence(spells: list[Callable]) -> Callable:
-    return lambda target: [spell(target) for spell in spells]
-
-
 def fireball(target):
     return f"Fireball hits {target}"
 
@@ -37,6 +33,10 @@ def conditional_caster(condition: Callable, spell: Callable) -> Callable:
     return lambda target: (
         spell(target) if condition(target) else "Spell fizzled"
     )
+
+
+def spell_sequence(spells: list[Callable]) -> Callable:
+    return lambda target: [spell(target) for spell in spells]
 
 
 def higher_magic():
