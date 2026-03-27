@@ -19,7 +19,7 @@ class SpellCard(Card):
             if effect.value == effect_type:
                 break
         else:
-            raise ValueError(f"Invalid effect_type: {effect_type}")
+            effect_type = EffectType.DAMAGE.value
         self.effect_type = effect_type
 
     def play(self, game_state: Dict) -> Dict:
