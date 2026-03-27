@@ -1,5 +1,5 @@
 import os
-from site import getusersitepackages
+import site
 import sys
 
 
@@ -30,7 +30,12 @@ def construct() -> None:
             "SUCCESS: You're in an isolated environment!",
             "Safe to install packages without affecting the global system\n",
         )
-        print("Package installation path:", getusersitepackages())
+        # test in terminal:
+        # python3 -c "import site; print(site.getsitepackages()[0])"
+        print(
+            "Package installation path:",
+            site.getsitepackages()[0],
+        )
     else:
         print(
             "WARNING: You're in the global environment!",
@@ -38,7 +43,7 @@ def construct() -> None:
         )
         print(
             "To enter the construct, run:",
-            "python -m venv matrix_env",
+            "python3 -m venv matrix_env",
             "source matrix_env/bin/activate # On Unix",
             "matrix_env\\Scripts\\activate # On Windows",
             sep="\n",
