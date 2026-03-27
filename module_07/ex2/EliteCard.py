@@ -42,7 +42,7 @@ class EliteCard(Card, Combatable, Magical):
 
     def defend(self, incoming_damage: int) -> Dict:
         if incoming_damage < 0:
-            raise ValueError("incoming_damage must be non-negative.")
+            incoming_damage = 0
 
         blocked_damaged = incoming_damage - self.defense
         if blocked_damaged < 0:

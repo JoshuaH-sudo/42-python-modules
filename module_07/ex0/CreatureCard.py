@@ -34,7 +34,7 @@ class CreatureCard(Card):
             "health": self.health,
         }
 
-    def attack_target(self, target: "CreatureCard") -> Dict:
+    def attack_target(self, target) -> Dict:
         return {
             "attacker": self.name,
             "target": target.name,

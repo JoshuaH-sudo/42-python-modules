@@ -50,7 +50,6 @@ class Deck:
             return {
                 "total_cards": 0,
                 "average_cost": 0,
-                "rarity_distribution": {},
             }
 
         average_cost = total_cost / total_cards
