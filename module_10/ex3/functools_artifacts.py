@@ -1,7 +1,6 @@
 from functools import reduce, partial, lru_cache, singledispatch
 from operator import add, mul
 from typing import Callable, Dict, List
-
 import time
 
 
