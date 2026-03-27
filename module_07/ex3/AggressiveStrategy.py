@@ -1,6 +1,7 @@
 from .GameStrategy import GameStrategy
 from typing import Dict, List
 
+
 class AggressiveStrategy(GameStrategy):
     def __init__(self, name: str = "AggressiveStrategy") -> None:
         super().__init__(name)
@@ -9,7 +10,7 @@ class AggressiveStrategy(GameStrategy):
         available_mana = 10
         mana_used = 0
         cards_played = []
-        for card in hand: 
+        for card in hand:
             if mana_used + card.cost <= available_mana:
                 cards_played.append(card)
                 mana_used += card.cost

@@ -1,5 +1,5 @@
 from random import choice
-from typing import Dict, List
+from typing import Dict
 
 from ex0.Card import Card
 from ex0.CreatureCard import CreatureCard
@@ -85,11 +85,9 @@ class FantasyCardFactory(CardFactory):
 
     def create_themed_deck(self, size: int) -> Dict:
         deck = {"creature": [], "spell": [], "artifact": []}
-        deck["creature"].append(self.create_creature())
-        deck["spell"].append(self.create_spell())
-        deck["artifact"].append(self.create_artifact())
-        for _ in range(size - 3):
-            card_type = choice(List(self.supported_types.keys()))
+
+        for _ in range(size):
+            card_type = choice(list(self.supported_types.keys()))
             if card_type == "creature":
                 deck["creature"].append(self.create_creature())
             elif card_type == "spell":
