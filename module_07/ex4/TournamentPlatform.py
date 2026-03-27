@@ -21,9 +21,7 @@ class TournamentPlatform:
 
     def create_match(self, card1_id: str, card2_id: str) -> Dict:
         if card1_id not in self.card_ids or card2_id not in self.card_ids:
-            raise ValueError(
-                "Both card IDs must be registered on the platform."
-            )
+            return {"error": "One or both card IDs not found."}
 
         card1 = self.card_ids[card1_id]
         card2 = self.card_ids[card2_id]
