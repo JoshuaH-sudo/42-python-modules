@@ -17,14 +17,9 @@ class EliteCard(Card, Combatable, Magical):
         mana_pool: int,
     ):
         Card.__init__(self, name, cost, rarity)
-        if attack_power < 0 or health < 0 or mana_pool < 0:
-            self.attack_power = 1
-            self.health = 1
-            self.mana_pool = 0
-        else:
-            self.attack_power = attack_power
-            self.health = health
-            self.mana_pool = mana_pool
+        self.attack_power = attack_power if attack_power >= 0 else 1
+        self.health = health if health >= 0 else 1
+        self.mana_pool = mana_pool if mana_pool >= 0 else 0
         self.defense = 3
 
     def play(self, game_state: Dict) -> Dict:
