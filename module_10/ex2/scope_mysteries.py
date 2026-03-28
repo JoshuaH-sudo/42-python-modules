@@ -51,6 +51,8 @@ def scope_mysteries() -> None:
     print(f"Call 1: {counter()}")  # Output: 1
     print(f"Call 2: {counter()}")  # Output: 2
     print(f"Call 3: {counter()}")  # Output: 3
+    # print([cell.cell_contents for cell in counter.__closure__])
+    # print(counter.__closure__[0].cell_contents)
 
     print("\nSpell Accumulator:")
     spell = spell_accumulator(10)
