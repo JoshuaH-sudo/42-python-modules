@@ -80,7 +80,7 @@ def lightning_bolt() -> str:
     return "Lightning Bolt cast successfully!"
 
 
-def decorator_mastery():
+def decorator_mastery() -> None:
     # print(fireball.__name__) # test by removing the @wraps decorator
     print("Testing spell timer...")
     print(f"Results: {fireball()}\n")

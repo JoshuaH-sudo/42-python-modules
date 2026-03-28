@@ -67,7 +67,7 @@ def base_enchantment(power: int, element: str, target: str) -> Dict:
     return {"power": power, "element": element, "target": target}
 
 
-def functools_artifacts():
+def functools_artifacts() -> None:
     spell_powers = [10, 20, 5, 15]
     print("Spell Powers:", spell_powers)
     print("Sum of Spell Powers:", spell_reducer(spell_powers, "add"))

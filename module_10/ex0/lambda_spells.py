@@ -31,7 +31,7 @@ def mage_stats(mages: List[Dict]) -> Dict:
     }
 
 
-def lambda_spells():
+def lambda_spells() -> None:
     artifacts = [
         {"name": "Earth Shield", "power": 112, "type": "armor"},
         {"name": "Earth Shield", "power": 72, "type": "focus"},

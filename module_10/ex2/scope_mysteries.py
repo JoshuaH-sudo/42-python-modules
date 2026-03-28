@@ -45,7 +45,7 @@ def memory_vault() -> dict[str, Callable]:
     return {"store": store, "recall": recall}
 
 
-def scope_mysteries():
+def scope_mysteries() -> None:
     counter = mage_counter()
     print("Mage Counter:")
     print(f"Call 1: {counter()}")  # Output: 1

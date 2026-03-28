@@ -1,23 +1,23 @@
 from typing import Callable
 
 
-def fireball(target):
+def fireball(target) -> str:
     return f"Fireball hits {target}"
 
 
-def heal(target):
+def heal(target) -> str:
     return f"Heals {target}"
 
 
-def lightning(target):
+def lightning(target) -> str:
     return f"Lightning strikes {target}"
 
 
-def fireball_power(power):
+def fireball_power(power) -> int:
     return power
 
 
-def is_enemy(target):
+def is_enemy(target) -> bool:
     return target in ["Goblin", "Orc"]
 
 
@@ -39,7 +39,7 @@ def spell_sequence(spells: list[Callable]) -> Callable:
     return lambda target: [spell(target) for spell in spells]
 
 
-def higher_magic():
+def higher_magic() -> None:
     combined = spell_combiner(fireball, heal)
     print("Testing spell combiner:")
     print(f"Combined Spell Result: {combined('Dragon')}\n")
