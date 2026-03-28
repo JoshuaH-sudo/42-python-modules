@@ -1,4 +1,4 @@
-from typing import Callable
+from typing import Callable, Dict
 
 
 # LEGB rule: Local, Enclosing, Global, Built-in
@@ -31,13 +31,11 @@ def enchantment_Factory(enchantment_type: str) -> Callable:
     return add_enchantment
 
 
-def memory_vault() -> dict[str, Callable]:
+def memory_vault() -> Dict[str, Callable]:
     vault = {}
 
-    def store(key: str, value: str | None = None):
-        if value is not None:
-            vault[key] = value
-        return vault.get(key, "Memory not found")
+    def store(key: str, value: str):
+        vault[key] = value
 
     def recall(key: str):
         return vault.get(key, "Memory not found")
