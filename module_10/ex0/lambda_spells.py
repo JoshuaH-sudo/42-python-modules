@@ -39,8 +39,8 @@ def lambda_spells() -> None:
         {"name": "Wind Cloak", "power": 98, "type": "relic"},
     ]
     mages = [
-        {"name": "Luna", "power": 65, "element": "shadow"},
-        {"name": "Ember", "power": 62, "element": "water"},
+        {"name": "Luna", "power": 10, "element": "shadow"},
+        {"name": "Ember", "power": 15, "element": "water"},
         {"name": "Ash", "power": 69, "element": "light"},
         {"name": "Morgan", "power": 81, "element": "lightning"},
         {"name": "Kai", "power": 66, "element": "fire"},
